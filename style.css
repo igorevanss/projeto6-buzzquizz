@@ -16,7 +16,7 @@ header {
   color: #FFFFFF;
   font-size: 37px;
   font-weight: 700;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 15px 15px 10px 10px black;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,14 +77,42 @@ h2{
   flex-wrap: wrap;
 }
 
-.all-quizzes div{
-  background: linear-gradient(to top, black, rgba(255, 255, 255, 0) 65%);
-  background-color: red;
-  width: 340px;
+.all-quizzes > div{
+  width: 320px;
+  height: 180px;
+  margin: 15px 7px 0 7px;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.all-quizzes img{
+  width: 320px;
   height: 180px;
   border-radius: 5px;
-  margin: 15px 7px 0 7px;
 }
+
+.opacity{
+  width: 320px;
+  height: 180px;
+  background: linear-gradient(to top, black, rgba(255, 255, 255, 0) 75%);
+  border-radius: 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.all-quizzes h3{
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  font-size: 19px;
+  font-weight: 400;
+  color: white;
+  z-index: 1;
+}
+
 
 
 
