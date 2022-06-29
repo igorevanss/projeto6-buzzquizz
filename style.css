@@ -7,31 +7,33 @@
 
 body{
   font-family: 'Roboto', sans-serif;
+  background-color: #FAFAFA;
 }
 
 header {
-  width: 100vw;
+  width: 100%;
   height: 70px;
   background-color: #EC362D;
   color: #FFFFFF;
   font-size: 37px;
   font-weight: 700;
-  box-shadow: 15px 15px 10px 10px black;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 3;
 }
 
 main{
-  background-color: #FAFAFA;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column; 
-  padding: 0 12% 0 12%;
+  align-items: center;
 }
 
 .make-quizz {
+  width: 1050px;
   height: 180px;
   border: 1px dashed #D5D5D5;
   margin: 77px 0;
@@ -69,9 +71,7 @@ h2{
 }
 
 .all-quizzes {
-  width: 100%;
-  height: auto;
-  margin: 0 auto;
+  width: 1050px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -111,6 +111,20 @@ h2{
   font-weight: 400;
   color: white;
   z-index: 1;
+}
+
+@media (max-width: 1100px){
+
+  .make-quizz {
+    width: 90%;
+
+  }
+
+  .all-quizzes {
+    width: 90%;
+
+  }
+
 }
 
 
