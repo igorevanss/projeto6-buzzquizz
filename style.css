@@ -117,6 +117,54 @@ h2{
   z-index: 1;
 }
 
+.basicInfos{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.basicInfos > h2{
+  font-size: 23px;
+  font-weight: 700;
+  margin-top: 70px;
+  margin-bottom: 30px;
+}
+
+.infoContainer {
+  width: 600px;
+  height: 256px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  padding: 22px 0;
+}
+
+.infoContainer input{
+  width: 94%;
+  height: 46px;
+  color: #D1D1D1;
+  font-style: italic;
+  border: 1px solid #D1D1D1;
+  border-radius: 5px;
+  padding-left: 23px;
+  font-size: 19px;
+  outline-color: #EC362D;
+}
+
+.basicInfos button{
+  width: 370px;
+  height: 55px;
+  background-color: #EC362D;
+  border-radius: 15px;
+  border: none;
+  color: #FFF5F4;
+  margin-top: 85px;
+}
+
 @media (max-width: 1100px){
 
   .make-quizz {
@@ -132,7 +180,27 @@ h2{
     justify-content: center;
   }
 
+  /*Break-point para tratar as telas de criação do quizz*/
+
+  @media (max-width: 600px){
+    .infoContainer {
+      width: 100%;
+    }
+
+    .basicInfos button{
+      width: 325px;
+      
+    }
+    
+  }
+
+
+
 }
+
+
+
+
 
 
 
