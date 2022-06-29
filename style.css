@@ -72,12 +72,16 @@ h2{
 
 .all-quizzes {
   width: 1050px;
+}
+
+.quizzes-container {
+  width: 1050px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 
-.all-quizzes > div{
+.quizzes-container > div{
   width: 320px;
   height: 180px;
   margin: 15px 7px 0 7px;
@@ -117,12 +121,15 @@ h2{
 
   .make-quizz {
     width: 90%;
-
   }
 
   .all-quizzes {
     width: 90%;
+  }
 
+  .quizzes-container {
+    width: 100%;
+    justify-content: center;
   }
 
 }

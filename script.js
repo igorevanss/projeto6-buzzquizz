@@ -1,4 +1,4 @@
-const quizzesContainer = document.querySelector(".all-quizzes");
+const quizzesContainer = document.querySelector(".quizzes-container");
 
 getQuizzes()
 
