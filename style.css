@@ -117,14 +117,14 @@ h2{
   z-index: 1;
 }
 
-.basicInfos, .questionsQuizz{
+.basicInfos, .questionsQuizz, .quizzLevels{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.basicInfos > h2, .questionsQuizz > h2{
+.basicInfos > h2, .questionsQuizz > h2, .quizzLevels > h2{
   font-size: 23px;
   font-weight: 700;
   margin-top: 70px;
@@ -143,8 +143,8 @@ h2{
   padding: 22px 0;
 }
 
-.infoContainer input, .questionDescription input, .correctAnswer input, .wrongAnswers input{
-  width: 94%;
+.infoContainer input, .questionDescription input, .correctAnswer input, .wrongAnswers input, .maxiLevel input{
+  width: 100%;
   height: 46px;
   color: #D1D1D1;
   font-style: italic;
@@ -155,7 +155,7 @@ h2{
   outline-color: #EC362D;
 }
 
-.basicInfos button, .questionsQuizz button{
+.basicInfos button, .questionsQuizz button, .quizzLevels button{
   width: 370px;
   height: 55px;
   background-color: #EC362D;
@@ -188,7 +188,7 @@ h2{
   padding: 0 18px;
 }
 
-.questionDescription > h3, .correctAnswer > h3, .wrongAnswers > h3, .miniQuestion > h3{
+.questionDescription > h3, .correctAnswer > h3, .wrongAnswers > h3, .miniQuestion > h3, .quizzLevels h3{
   font-size: 20px;
   font-weight: 700;
 }
@@ -202,7 +202,7 @@ h2{
   padding: 0 18px;
 }
 
-.miniQuestion{
+.miniQuestion, .miniLevel{
   width: 600px;
   height: 74px;
   display: flex;
@@ -213,6 +213,23 @@ h2{
   padding: 0 20px;
   margin-top: 25px;
 }
+
+.miniQuestion > ion-icon, .quizzLevels ion-icon{
+  width: 25px;
+  height: 25px;
+}
+
+.maxiLevel {
+  width: 600px;
+  height: 316px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  padding: 27px 18px;
+}
+
 
 @media (max-width: 1100px){
 
@@ -228,15 +245,15 @@ h2{
   /*Break-point para tratar as telas de criação do quizz*/
 
   @media (max-width: 600px){
-    .basicInfos > h2, .questionsQuizz > h2{
+    .basicInfos > h2, .questionsQuizz > h2, .quizzLevels > h2{
       margin-top: 40px;
     }
 
-    .infoContainer, .miniQuestion, .maxiQuestion {
+    .infoContainer, .miniQuestion, .maxiQuestion, .maxiLevel, .miniLevel{
       width: 100%;
     }
 
-    .basicInfos button, .questionsQuizz button{
+    .basicInfos button, .questionsQuizz button, .quizzLevels button{
       width: 325px;
       margin: 85px 25px;
     }
