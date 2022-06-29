@@ -117,14 +117,14 @@ h2{
   z-index: 1;
 }
 
-.basicInfos{
+.basicInfos, .questionsQuizz{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.basicInfos > h2{
+.basicInfos > h2, .questionsQuizz > h2{
   font-size: 23px;
   font-weight: 700;
   margin-top: 70px;
@@ -143,7 +143,7 @@ h2{
   padding: 22px 0;
 }
 
-.infoContainer input{
+.infoContainer input, .questionDescription input, .correctAnswer input, .wrongAnswers input{
   width: 94%;
   height: 46px;
   color: #D1D1D1;
@@ -155,23 +155,68 @@ h2{
   outline-color: #EC362D;
 }
 
-.basicInfos button{
+.basicInfos button, .questionsQuizz button{
   width: 370px;
   height: 55px;
   background-color: #EC362D;
   border-radius: 15px;
   border: none;
   color: #FFF5F4;
-  margin-top: 85px;
+  margin: 85px 0;
+  font-size: 21px;
+
+}
+
+.maxiQuestion {
+  width: 600px;
+  height: 825px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  padding: 27px 0;
+}
+
+.questionDescription, .correctAnswer{
+  width: 100%;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 18px;
+}
+
+.questionDescription > h3, .correctAnswer > h3, .wrongAnswers > h3, .miniQuestion > h3{
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.wrongAnswers{
+  width: 100%;
+  height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 18px;
+}
+
+.miniQuestion{
+  width: 600px;
+  height: 74px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  padding: 0 20px;
+  margin-top: 25px;
 }
 
 @media (max-width: 1100px){
 
-  .make-quizz {
-    width: 90%;
-  }
-
-  .all-quizzes {
+  .make-quizz, .all-quizzes {
     width: 90%;
   }
 
@@ -183,18 +228,20 @@ h2{
   /*Break-point para tratar as telas de criação do quizz*/
 
   @media (max-width: 600px){
-    .infoContainer {
+    .basicInfos > h2, .questionsQuizz > h2{
+      margin-top: 40px;
+    }
+
+    .infoContainer, .miniQuestion, .maxiQuestion {
       width: 100%;
     }
 
-    .basicInfos button{
+    .basicInfos button, .questionsQuizz button{
       width: 325px;
-      
+      margin: 85px 25px;
     }
     
   }
-
-
 
 }
 
