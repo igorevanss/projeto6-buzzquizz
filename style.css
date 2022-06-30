@@ -241,6 +241,15 @@ h2{
   align-items: center;
   background-color: purple;
   margin-top: 70px;
+  position: relative;
+}
+
+.opacity60 {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.6;
+  position: absolute;
 }
 
 .banner-quizz > p {
