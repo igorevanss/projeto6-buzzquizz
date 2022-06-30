@@ -90,10 +90,9 @@ h2{
   overflow: hidden;
 }
 
-.all-quizzes img{
+.all-quizzes img, .quizzFinished img{
   width: 320px;
   height: 180px;
-  border-radius: 5px;
 }
 
 .opacity{
@@ -117,14 +116,14 @@ h2{
   z-index: 1;
 }
 
-.basicInfos, .questionsQuizz, .quizzLevels{
+.basicInfos, .questionsQuizz, .quizzLevels, .quizzFinished{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.basicInfos > h2, .questionsQuizz > h2, .quizzLevels > h2{
+.basicInfos > h2, .questionsQuizz > h2, .quizzLevels > h2, .quizzFinished > h2{
   font-size: 23px;
   font-weight: 700;
   margin-top: 70px;
@@ -140,14 +139,13 @@ h2{
   align-items: center;
   background-color: #FFFFFF;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-  padding: 22px 0;
+  padding: 22px;
 }
 
 .infoContainer input, .questionDescription input, .correctAnswer input, .wrongAnswers input, .maxiLevel input{
   width: 100%;
   height: 46px;
-  color: #D1D1D1;
-  font-style: italic;
+  color: #000000;
   border: 1px solid #D1D1D1;
   border-radius: 5px;
   padding-left: 23px;
@@ -155,7 +153,12 @@ h2{
   outline-color: #EC362D;
 }
 
-.basicInfos button, .questionsQuizz button, .quizzLevels button{
+.infoContainer input::placeholder, .questionDescription input::placeholder, .correctAnswer input::placeholder, .wrongAnswers input::placeholder, .maxiLevel input::placeholder{
+  color: #D1D1D1;
+  font-style: italic;
+}
+
+.basicInfos button, .questionsQuizz button, .quizzLevels button, .quizzFinished button{
   width: 370px;
   height: 55px;
   background-color: #EC362D;
@@ -164,7 +167,6 @@ h2{
   color: #FFF5F4;
   margin: 85px 0;
   font-size: 21px;
-
 }
 
 .maxiQuestion {
@@ -177,6 +179,7 @@ h2{
   background-color: #FFFFFF;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   padding: 27px 0;
+  margin: 12.5px;
 }
 
 .questionDescription, .correctAnswer{
@@ -211,7 +214,7 @@ h2{
   background-color: #FFFFFF;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   padding: 0 20px;
-  margin-top: 25px;
+  margin: 12.5px;
 }
 
 .miniQuestion > ion-icon, .quizzLevels ion-icon{
@@ -228,6 +231,27 @@ h2{
   background-color: #FFFFFF;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   padding: 27px 18px;
+  margin: 12.5px;
+}
+
+.quizzFinished > span{
+  font-size: 18px;
+  font-weight: 400;
+  color: #818181;
+}
+
+.quizzFinished > div{
+  width: 320px;
+  height: 180px;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.quizzFinished button{
+  width: 220px;
+  height: 45px;
+  margin: 45px 0 20px 0;
 }
 
 
@@ -257,15 +281,7 @@ h2{
       width: 325px;
       margin: 85px 25px;
     }
-    
+
   }
-
 }
-
-
-
-
-
-
-
 
