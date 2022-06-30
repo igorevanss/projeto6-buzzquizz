@@ -28,6 +28,7 @@ header {
 }
 
 main{
+  margin-top: 70px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -119,7 +120,9 @@ h2{
   z-index: 1;
 }
 
+/*ÍNICO TELA 3*/
 .basicInfos, .questionsQuizz, .quizzLevels, .quizzFinished{
+  margin-top: 70px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -256,12 +259,12 @@ h2{
   height: 45px;
   margin: 45px 0 20px 0;
 }
+/*FIM TELA 3*/
 
 /*Exibição de um quizz*/
 .banner-quizz {
   width: 100%;
   height: 226px;
-  margin-top: 70px;
   position: relative;
 }
 
