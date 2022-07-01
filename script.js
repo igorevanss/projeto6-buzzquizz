@@ -1,11 +1,16 @@
 const container = document.querySelector(".DOMcontainer");
 welcome()
 const quizzesContainer = document.querySelector(".quizzes-container");
+let APIQuizzes;
 let title;
 let url;
 let numberOfQuestions;
 let numberOfLevels;
-let APIQuizzes;
+let questionText = [];
+let questionColor = [];
+let answerText;
+
+
 
 
 function welcome(){
@@ -68,57 +73,58 @@ function initialInfoQuizz(){
 }
 
 function createQuestions(){
-
   const allInputs = document.querySelector(".infoContainer");
   title = allInputs.querySelector("input:nth-of-type(1)").value;
   url = allInputs.querySelector("input:nth-of-type(2)").value;
   numberOfQuestions = allInputs.querySelector("input:nth-of-type(3)").value;
   numberOfLevels = allInputs.querySelector("input:nth-of-type(4)").value;
-  if (!titleValidation() || !urlValidation() || !questionNumberValidation() || !levelNumberValidation()){
-    titleValidation()
-    urlValidation()
-    questionNumberValidation()
-    levelNumberValidation()
-  } else{
+  //  if (!titleValidation() || !urlValidation() || !questionNumberValidation() || !levelNumberValidation()){
+  //    titleValidation()
+  //    urlValidation()
+  //    questionNumberValidation()
+  //    levelNumberValidation()
+  //  } else{
     container.innerHTML = null;
     container.innerHTML = `
       <div class="questionsQuizz">
         <h2>Crie suas perguntas</h2>
-        <div class="maxiQuestion" onclick="hideOption(this)">
-          <div class="questionDescription">
-            <h3>Pergunta 1</h3>
-            <input placeholder="Texto da pergunta">
-            <input placeholder="Cor de fundo da pergunta">
-          </div>
-          <div class="correctAnswer">
-            <h3>Resposta correta</h3>
-            <input placeholder="Resposta correta">
-            <input placeholder="URL da imagem">
-          </div>
-          <div class="wrongAnswers">
-            <h3>Respostas incorretas</h3>
-            <input placeholder="Resposta incorreta 1">
-            <input placeholder="URL da imagem 1">
-            <div></div>
-            <input placeholder="Resposta incorreta 2">
-            <input placeholder="URL da imagem 2">
-            <div></div>
-            <input placeholder="Resposta incorreta 3">
-            <input placeholder="URL da imagem 3">
-            <div></div>
-          </div>
-        </div>
-        <div class="miniQuestion" onclick="hideOption(this)">
-          <h3>Pergunta 2</h3>
-          <ion-icon name="create-outline"></ion-icon>
-        </div>
-        <div class="miniQuestion" onclick="hideOption(this)">
-          <h3>Pergunta 3</h3>
-          <ion-icon name="create-outline"></ion-icon>
-        </div>
-        <button>Prosseguir para criar níveis</button>
       </div>`
-  }
+    const questionsContainer = document.querySelector(".questionsQuizz")
+    for(let i = 1; i <= numberOfQuestions; i++){
+      questionsContainer.innerHTML += 
+        `<div class="questionSizes">
+          <div class="miniQuestion" onclick="hideOption(this)">
+            <h3>Pergunta ${i}</h3>
+            <ion-icon name="create-outline"></ion-icon>
+          </div>
+          <div class="maxiQuestion hidden">
+            <div class="questionDescription">
+              <h3>Pergunta ${i}</h3>
+              <input placeholder="Texto da pergunta">
+              <input placeholder="Cor de fundo da pergunta">
+            </div>
+            <div class="correctAnswer">
+              <h3>Resposta correta</h3>
+              <input placeholder="Resposta correta">
+              <input placeholder="URL da imagem">
+            </div>
+            <div class="wrongAnswers">
+              <h3>Respostas incorretas</h3>
+              <input placeholder="Resposta incorreta 1">
+              <input placeholder="URL da imagem 1">
+              <div></div>
+              <input placeholder="Resposta incorreta 2">
+              <input placeholder="URL da imagem 2">
+              <div></div>
+              <input placeholder="Resposta incorreta 3">
+              <input placeholder="URL da imagem 3">
+              <div></div>
+            </div>
+          </div>
+        </div>` 
+    }
+    questionsContainer.innerHTML += `<button onclick="createLevels()">Prosseguir para criar níveis</button>`
+  //}
 }
 
 function titleValidation(){
@@ -179,6 +185,86 @@ function levelNumberValidation(){
   }
 }
 
+function hideOption(element){
+  const optionSizes = element.parentNode
+  const removeMaximizedQuestion = document.querySelector(".maxiQuestion:not(.hidden)")
+  const removeMaximizedLevel = document.querySelector(".maxiLevel:not(.hidden)")
+  const defaultMinimizedQuestion = document.querySelector(".miniQuestion.hidden")
+  const defaultMinimizedLevel = document.querySelector(".miniLevelhidden")
+  const maximizedQuestion = optionSizes.querySelector(".maxiQuestion");
+  const maximizedLevel = optionSizes.querySelector(".maxiLevel");
+  if(optionSizes.classList.contains("questionSizes")){
+    if(removeMaximizedQuestion != null){
+      removeMaximizedQuestion.classList.add("hidden")
+      defaultMinimizedQuestion.classList.remove("hidden")
+    }
+    element.classList.add("hidden")
+    maximizedQuestion.classList.remove("hidden")
+  } else {
+    if(removeMaximizedQuestion != null){
+      removeMaximizedQuestion.classList.add("hidden")
+      defaultMinimizedQuestion.classList.remove("hidden")
+    }
+    element.classList.add("hidden")
+    maximizedQuestion.classList.remove("hidden")
+  }
+}
+
+function createLevels(){
+  const question = document.querySelectorAll(".maxiQuestion");
+  let questionInfo = [];
+  let correct = [];
+  let wrong = [];
+  let questionComplete = [];
+
+  for(let i = 0; i < question.length; i++){
+    let isValidAnswer2 = question[i].querySelector(".wrongAnswers > input:nth-of-type(3)").value
+    let isValidAnswer3 = question[i].querySelector(".wrongAnswers > input:nth-of-type(5)").value
+    questionInfo.push(question[i].querySelector(".questionDescription > input:nth-of-type(1)").value);
+    questionInfo.push(question[i].querySelector(".questionDescription > input:nth-of-type(2)").value);
+    correct.push(question[i].querySelector(".correctAnswer > input:nth-of-type(1)").value);
+    correct.push(question[i].querySelector(".correctAnswer > input:nth-of-type(2)").value);
+    wrong.push(question[i].querySelector(".wrongAnswers > input:nth-of-type(1)").value);
+    wrong.push(question[i].querySelector(".wrongAnswers > input:nth-of-type(2)").value);
+    if (isValidAnswer2 != ""){
+      wrong.push(question[i].querySelector(".wrongAnswers > input:nth-of-type(3)").value);
+      wrong.push(question[i].querySelector(".wrongAnswers > input:nth-of-type(4)").value);
+    } 
+    if (isValidAnswer3 != ""){
+      wrong.push(question[i].querySelector(".wrongAnswers > input:nth-of-type(5)").value);
+      wrong.push(question[i].querySelector(".wrongAnswers > input:nth-of-type(6)").value);
+    }
+    questionComplete.push(questionInfo, correct, wrong)
+    questionInfo = [];
+    correct = [];
+    wrong = [];
+  }
+  
+/*
+  container.innerHTML = null;
+  container.innerHTML = `
+    <div class="quizzLevels">
+      <h2>Agora, decida os níveis!</h2>
+    </div>`
+  const levelContainer = document.querySelector(".quizzLevels");
+  levelContainer.innerHTML += `
+    <div class="miniLevel" onclick="hideOption(this)">
+      <h3>Nível 2</h3>
+      <ion-icon name="create-outline"></ion-icon>
+    </div>
+    <div class="miniLevel" onclick="hideOption(this)">
+      <h3>Nível 2</h3>
+      <ion-icon name="create-outline"></ion-icon>
+    </div>
+    <div class="miniLevel" onclick="hideOption(this)">
+      <h3>Nível 2</h3>
+      <ion-icon name="create-outline"></ion-icon>
+    </div>
+    <button>Finalizar Quizz</button>`*/
+  }
+
+
+
 function goToQuizz(){
   container.innerHTML = null;
   container.innerHTML = `
@@ -232,111 +318,6 @@ function goToQuizz(){
 
 function reload(){
   window.location.reload()
-}
-
-//popLevel();
-//popQuestions();
-
-function popQuestions(){
-  const questionsContainer = document.querySelector(".questionsQuizz");
-  questionsContainer.innerHTML = `
-    <h2>Crie suas perguntas</h2>
-    <div class="miniQuestion" onclick="hideOption(this)">
-      <h3>Pergunta 2</h3>
-      <ion-icon name="create-outline"></ion-icon>
-    </div>
-    <div class="miniQuestion" onclick="hideOption(this)">
-      <h3>Pergunta 2</h3>
-      <ion-icon name="create-outline"></ion-icon>
-    </div>
-    <div class="miniQuestion" onclick="hideOption(this)">
-      <h3>Pergunta 3</h3>
-      <ion-icon name="create-outline"></ion-icon>
-    </div>
-    <button>Prosseguir para criar níveis</button>`
-}
-
-function popLevel(){
-  const levelContainer = document.querySelector(".quizzLevels");
-  levelContainer.innerHTML = `
-    <h2>Agora, decida os níveis!</h2>
-    <div class="miniLevel" onclick="hideOption(this)">
-      <h3>Nível 2</h3>
-      <ion-icon name="create-outline"></ion-icon>
-    </div>
-    <div class="miniLevel" onclick="hideOption(this)">
-      <h3>Nível 2</h3>
-      <ion-icon name="create-outline"></ion-icon>
-    </div>
-    <div class="miniLevel" onclick="hideOption(this)">
-      <h3>Nível 2</h3>
-      <ion-icon name="create-outline"></ion-icon>
-    </div>
-    <button>Finalizar Quizz</button>`
-  }
-
-function hideOption(element){
-  const optionType = element.parentNode
-  const maximizedQuestion = optionType.querySelector(".maxiQuestion");
-  const maximizedLevel = optionType.querySelector(".maxiLevel");
-  if(optionType.classList.contains("questionsQuizz")){
-    if (element.classList.contains("maxiQuestion")){
-      return
-    } else {
-      element.classList.add("maxiQuestion")
-      element.classList.remove("miniQuestion")
-      element.innerHTML = `
-          <div class="questionDescription">
-            <h3>Pergunta 1</h3>
-            <input placeholder="Texto da pergunta">
-            <input placeholder="Cor de fundo da pergunta">
-          </div>
-          <div class="correctAnswer">
-            <h3>Resposta correta</h3>
-            <input placeholder="Resposta correta">
-            <input placeholder="URL da imagem">
-          </div>
-          <div class="wrongAnswers">
-            <h3>Respostas incorretas</h3>
-            <input placeholder="Resposta incorreta 1">
-            <input placeholder="URL da imagem 1">
-            <div></div>
-            <input placeholder="Resposta incorreta 2">
-            <input placeholder="URL da imagem 2">
-            <div></div>
-            <input placeholder="Resposta incorreta 3">
-            <input placeholder="URL da imagem 3">
-            <div></div>
-          </div>
-          `
-      maximizedQuestion.classList.remove("maxiQuestion")
-      maximizedQuestion.classList.add("miniQuestion")
-      maximizedQuestion.innerHTML = `
-        <h3>Pergunta 2</h3>
-        <ion-icon name="create-outline"></ion-icon>
-        `
-    }
-  } else {
-    if (element.classList.contains("maxiLevel")){
-      return
-    } else {
-      element.classList.add("maxiLevel")
-      element.classList.remove("miniLevel")
-      element.innerHTML = `
-          <h3>Nível 1</h3>
-          <input placeholder="Título do nível">
-          <input placeholder="% de acerto mínima">
-          <input placeholder="URL da imagem do nível">
-          <input placeholder="Descrição do nível">
-        `
-      maximizedLevel.classList.remove("maxiLevel")
-      maximizedLevel.classList.add("miniLevel")
-      maximizedLevel.innerHTML = `
-          <h3>Nível 2</h3>
-          <ion-icon name="create-outline"></ion-icon>
-        `
-    }
-  }
 }
 
 
