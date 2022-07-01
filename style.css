@@ -431,6 +431,25 @@ main > p {
       margin: 85px 25px;
     }
 
+    .play-quizz {
+      width: 100%;
+    }
+
+    .answer img {
+      width: 153px;
+      height: 113px;
+    }
+
+    .finishing-quizz {
+      width: 100%;
+      height:auto;
+    }
+
+    .finishing-quizz-content {
+      display: block;
+      
+    }
+
   }
 }
 
