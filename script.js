@@ -6,12 +6,8 @@ let title;
 let url;
 let numberOfQuestions;
 let numberOfLevels;
-let questionText = [];
-let questionColor = [];
-let answerText;
-
-
-
+let questionDataStorage = [];
+let questionObject = [];
 
 function welcome(){
   const container = document.querySelector(".DOMcontainer");
@@ -58,9 +54,9 @@ function initialInfoQuizz(){
   <div class="basicInfos">
     <h2>Comece pelo começo</h2>
     <div class="infoContainer">
-      <input placeholder="Título do seu quizz" type="text" minlength="20" maxlength="65">
+      <input placeholder="Título do seu quizz" type="text" minlength="20" maxlength="65" class="title">
       <div class="hidden">O título deve ter entre 20 e 65 caracteres. :(</div>
-      <input type="url" placeholder="URL da imagem do seu quizz">
+      <input type="url" placeholder="URL da imagem do seu quizz" class="url">
       <div class="hidden">O valor informado não é uma URL válida. :(</div>
       <input placeholder="Quantidade de perguntas do quizz" type="number">
       <div class="hidden">O quizz deve ter no mínimo 3 perguntas. :(</div>
@@ -78,12 +74,12 @@ function createQuestions(){
   url = allInputs.querySelector("input:nth-of-type(2)").value;
   numberOfQuestions = allInputs.querySelector("input:nth-of-type(3)").value;
   numberOfLevels = allInputs.querySelector("input:nth-of-type(4)").value;
-  //  if (!titleValidation() || !urlValidation() || !questionNumberValidation() || !levelNumberValidation()){
-  //    titleValidation()
-  //    urlValidation()
-  //    questionNumberValidation()
-  //    levelNumberValidation()
-  //  } else{
+    // if (!titleValidation() || !urlQuizzValidation() || !questionNumberValidation() || !levelNumberValidation()){
+    //   titleValidation()
+    //   urlQuizzValidation()
+    //   questionNumberValidation()
+    //   levelNumberValidation()
+    // } else{
     container.innerHTML = null;
     container.innerHTML = `
       <div class="questionsQuizz">
@@ -100,24 +96,34 @@ function createQuestions(){
           <div class="maxiQuestion hidden">
             <div class="questionDescription">
               <h3>Pergunta ${i}</h3>
-              <input placeholder="Texto da pergunta">
-              <input placeholder="Cor de fundo da pergunta">
+              <input placeholder="Texto da pergunta" class="title">
+              <div class="hidden">O título deve ter, no mínimo, 20 caracteres. :(</div>
+              <input placeholder="Cor de fundo da pergunta" class="color">
+              <div class="hidden">A cor deve ter o formato hexadecimal, antecedido de '#'. :(</div>
             </div>
             <div class="correctAnswer">
               <h3>Resposta correta</h3>
-              <input placeholder="Resposta correta">
-              <input placeholder="URL da imagem">
+              <input placeholder="Resposta correta" class="answer">
+              <div class="hidden">O valor informado não é uma URL válida. :(</div>
+              <input placeholder="URL da imagem" class="url">
+              <div class="hidden">O valor informado não é uma URL válida. :(</div>
             </div>
             <div class="wrongAnswers">
               <h3>Respostas incorretas</h3>
-              <input placeholder="Resposta incorreta 1">
-              <input placeholder="URL da imagem 1">
+              <input placeholder="Resposta incorreta 1" class="answer">
+              <div class="hidden">O valor informado não é uma URL válida. :(</div>
+              <input placeholder="URL da imagem 1" class="url">
+              <div class="hidden">O valor informado não é uma URL válida. :(</div>
               <div></div>
-              <input placeholder="Resposta incorreta 2">
-              <input placeholder="URL da imagem 2">
+              <input placeholder="Resposta incorreta 2" class="answer">
+              <div class="hidden">O valor informado não é uma URL válida. :(</div>
+              <input placeholder="URL da imagem 2" class="url">
+              <div class="hidden">O valor informado não é uma URL válida. :(</div>
               <div></div>
-              <input placeholder="Resposta incorreta 3">
-              <input placeholder="URL da imagem 3">
+              <input placeholder="Resposta incorreta 3" class="answer">
+              <div class="hidden">O valor informado não é uma URL válida. :(</div>
+              <input placeholder="URL da imagem 3" class="url">
+              <div class="hidden">O valor informado não é uma URL válida. :(</div>
               <div></div>
             </div>
           </div>
@@ -128,19 +134,20 @@ function createQuestions(){
 }
 
 function titleValidation(){
-  let titleMessage = document.querySelector(".infoContainer > div:nth-of-type(1)")
-  if(title.length < 20){
-    titleMessage.classList.remove("hidden");
-    titleMessage.classList.add("validation");
-    return false
-  } else{
-    titleMessage.classList.add("hidden");
-    titleMessage.classList.remove("validation");
-    return true
+  let allTitleInput = document.querySelectorAll(".title");
+  for (let i = 0; i < allTitleInput.length; i++){
+    if(allTitleInput[i].value.length < 20){
+      allTitleInput[i].nextElementSibling.classList.remove("hidden");
+      allTitleInput[i].nextElementSibling.classList.add("validation");
+    } else{
+      allTitleInput[i].nextElementSibling.classList.add("hidden");
+      allTitleInput[i].nextElementSibling.classList.remove("validation");
+    }
   }
+  return true
 }
 
-function urlValidation(){
+function urlQuizzValidation(){
   let urlMessage = document.querySelector(".infoContainer > div:nth-of-type(2)")
   let pattern = new RegExp('^(https?:\\/\\/)?'+ 
     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ 
@@ -185,12 +192,74 @@ function levelNumberValidation(){
   }
 }
 
+function colorValidation(){
+  let allColorInput = document.querySelectorAll(".color");
+  for (let i = 0; i < allColorInput.length; i++){
+    let patternColor = new RegExp("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"); 
+    if (patternColor.test(allColorInput[i].value)) {
+      allColorInput[i].nextElementSibling.classList.add("hidden");
+      allColorInput[i].nextElementSibling.classList.remove("validation");
+    } else {
+      allColorInput[i].nextElementSibling.classList.remove("hidden");
+      allColorInput[i].nextElementSibling.classList.add("validation");
+    }
+  }
+  return true
+}
+
+function generalURLValidation(){
+  let allQuestions = document.querySelectorAll(".maxiQuestion")
+  let cont = 0;
+  let pattern = new RegExp('^(https?:\\/\\/)?'+ 
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ 
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ 
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ 
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ 
+    '(\\#[-a-z\\d_]*)?$','i'); 
+  let answersArray = questionObject.map((value) => value = value.answers)
+  for (let i=0; i < allQuestions.length; i++){
+    while (cont < answersArray[i].length){
+      if (pattern.test(allQuestions[i].querySelectorAll(".url")[cont].value)) {
+        allQuestions[i].querySelectorAll(".url")[cont].nextElementSibling.classList.add("hidden");
+        allQuestions[i].querySelectorAll(".url")[cont].nextElementSibling.classList.remove("validation");
+      } else {
+        allQuestions[i].querySelectorAll(".url")[cont].nextElementSibling.classList.remove("hidden");
+        allQuestions[i].querySelectorAll(".url")[cont].nextElementSibling.classList.add("validation");
+      }
+      cont ++
+    }
+    cont = 0;
+  }
+  return true
+}
+
+function generalTitleValidation(){
+  let allQuestions = document.querySelectorAll(".maxiQuestion")
+  let cont = 0;
+  let answersArray = questionObject.map((value) => value = value.answers)
+  for (let i=0; i < allQuestions.length; i++){
+    while (cont < answersArray[i].length){
+      if (allQuestions[i].querySelectorAll(".answer")[cont].value !== "") {
+        allQuestions[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.add("hidden");
+        allQuestions[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.remove("validation");
+      } else {
+        allQuestions[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.remove("hidden");
+        allQuestions[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.add("validation");
+      }
+      cont ++
+    }
+    cont = 0;
+  }
+  return true
+}
+
+  
 function hideOption(element){
   const optionSizes = element.parentNode
   const removeMaximizedQuestion = document.querySelector(".maxiQuestion:not(.hidden)")
   const removeMaximizedLevel = document.querySelector(".maxiLevel:not(.hidden)")
   const defaultMinimizedQuestion = document.querySelector(".miniQuestion.hidden")
-  const defaultMinimizedLevel = document.querySelector(".miniLevelhidden")
+  const defaultMinimizedLevel = document.querySelector(".miniLevel.hidden")
   const maximizedQuestion = optionSizes.querySelector(".maxiQuestion");
   const maximizedLevel = optionSizes.querySelector(".maxiLevel");
   if(optionSizes.classList.contains("questionSizes")){
@@ -201,68 +270,113 @@ function hideOption(element){
     element.classList.add("hidden")
     maximizedQuestion.classList.remove("hidden")
   } else {
-    if(removeMaximizedQuestion != null){
-      removeMaximizedQuestion.classList.add("hidden")
-      defaultMinimizedQuestion.classList.remove("hidden")
+    if(removeMaximizedLevel != null){
+      removeMaximizedLevel.classList.add("hidden")
+      defaultMinimizedLevel.classList.remove("hidden")
     }
     element.classList.add("hidden")
-    maximizedQuestion.classList.remove("hidden")
+    maximizedLevel.classList.remove("hidden")
   }
 }
 
 function createLevels(){
   const question = document.querySelectorAll(".maxiQuestion");
+  questionDataStorage = [];
   let questionInfo = [];
   let correct = [];
   let wrong = [];
-  let questionComplete = [];
 
   for(let i = 0; i < question.length; i++){
     let isValidAnswer2 = question[i].querySelector(".wrongAnswers > input:nth-of-type(3)").value
     let isValidAnswer3 = question[i].querySelector(".wrongAnswers > input:nth-of-type(5)").value
+    let isValidURL2 = question[i].querySelector(".wrongAnswers > input:nth-of-type(4)").value
+    let isValidURL3 = question[i].querySelector(".wrongAnswers > input:nth-of-type(6)").value
     questionInfo.push(question[i].querySelector(".questionDescription > input:nth-of-type(1)").value);
     questionInfo.push(question[i].querySelector(".questionDescription > input:nth-of-type(2)").value);
     correct.push(question[i].querySelector(".correctAnswer > input:nth-of-type(1)").value);
     correct.push(question[i].querySelector(".correctAnswer > input:nth-of-type(2)").value);
     wrong.push(question[i].querySelector(".wrongAnswers > input:nth-of-type(1)").value);
     wrong.push(question[i].querySelector(".wrongAnswers > input:nth-of-type(2)").value);
-    if (isValidAnswer2 != ""){
+    if (isValidAnswer2 != "" || isValidURL2 !== ""){
       wrong.push(question[i].querySelector(".wrongAnswers > input:nth-of-type(3)").value);
       wrong.push(question[i].querySelector(".wrongAnswers > input:nth-of-type(4)").value);
     } 
-    if (isValidAnswer3 != ""){
+    if (isValidAnswer3 != "" || isValidURL3 !== ""){
       wrong.push(question[i].querySelector(".wrongAnswers > input:nth-of-type(5)").value);
       wrong.push(question[i].querySelector(".wrongAnswers > input:nth-of-type(6)").value);
     }
-    questionComplete.push(questionInfo, correct, wrong)
+    questionDataStorage.push([questionInfo, correct, wrong])
     questionInfo = [];
     correct = [];
     wrong = [];
   }
-  
-/*
-  container.innerHTML = null;
-  container.innerHTML = `
-    <div class="quizzLevels">
-      <h2>Agora, decida os níveis!</h2>
-    </div>`
-  const levelContainer = document.querySelector(".quizzLevels");
-  levelContainer.innerHTML += `
-    <div class="miniLevel" onclick="hideOption(this)">
-      <h3>Nível 2</h3>
-      <ion-icon name="create-outline"></ion-icon>
-    </div>
-    <div class="miniLevel" onclick="hideOption(this)">
-      <h3>Nível 2</h3>
-      <ion-icon name="create-outline"></ion-icon>
-    </div>
-    <div class="miniLevel" onclick="hideOption(this)">
-      <h3>Nível 2</h3>
-      <ion-icon name="create-outline"></ion-icon>
-    </div>
-    <button>Finalizar Quizz</button>`*/
+
+  createQuestionObject()
+    // if (!titleValidation() || !generalURLValidation() || !colorValidation() || !generalTitleValidation()){
+    //   titleValidation()
+    //   generalURLValidation()
+    //   colorValidation();
+    //   generalTitleValidation()
+    //  } else{
+
+      container.innerHTML = null;
+      container.innerHTML = `
+        <div class="quizzLevels">
+          <h2>Agora, decida os níveis!</h2>
+        </div>`
+      const levelsContainer = document.querySelector(".quizzLevels")
+      for(let i = 1; i <= numberOfLevels; i++){
+        levelsContainer.innerHTML += `
+        <div class="levelSizes">
+          <div class="miniLevel" onclick="hideOption(this)">
+            <h3>Nível ${i}</h3>
+            <ion-icon name="create-outline"></ion-icon>
+          </div>
+          <div class="maxiLevel hidden">
+            <h3>Nível ${i}</h3>
+            <input placeholder="Título do nível">
+            <input placeholder="% de acerto mínima">
+            <input placeholder="URL da imagem do nível">
+            <input placeholder="Descrição do nível">
+          </div>
+        </div>`
+      }
+      levelsContainer.innerHTML += `<button onclick="reload()">Finalizar Quizz</button>`
   }
 
+
+function createQuestionObject(){
+  questionObject = [];
+  let urlPosition = 1
+  let wrongPosition = 0
+  for (let i = 0; i < questionDataStorage.length; i++){
+    questionObject.push({
+			title: questionDataStorage[i][0][0],
+			color: questionDataStorage[i][0][1],
+			answers: [
+				{
+					text: questionDataStorage[i][1][0],
+					image: questionDataStorage[i][1][1],
+					isCorrectAnswer: true
+				},
+			]
+		})
+  }
+  for (let i = 0; i < questionDataStorage.length; i++){
+    
+    for(let ansNum = 0; ansNum < questionDataStorage[i][2].length/2 ;ansNum++){
+      questionObject[i].answers.push({
+        text: questionDataStorage[i][2][wrongPosition],
+        image: questionDataStorage[i][2][urlPosition],
+        isCorrectAnswer: false
+      })
+      wrongPosition += 2;
+      urlPosition += 2;
+    }
+      wrongPosition = 0;
+      urlPosition = 1;
+  }
+}
 
 
 function goToQuizz(){

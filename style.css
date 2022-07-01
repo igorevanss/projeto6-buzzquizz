@@ -155,7 +155,7 @@ h2{
   border: 1px solid #D1D1D1;
   border-radius: 5px;
   padding-left: 23px;
-  margin: 5px;
+  margin: 5px 0;
   font-size: 19px;
   outline-color: #EC362D;
 }
@@ -403,7 +403,7 @@ main > p {
   margin-bottom: 80px;
 }
 
-.infoContainer > .validation{
+.validation{
   width: 100%;
   color: #EC362D;
   margin-bottom: 10px
