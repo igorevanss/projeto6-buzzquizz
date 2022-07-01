@@ -5,6 +5,7 @@ let title;
 let url;
 let numberOfQuestions;
 let numberOfLevels;
+let APIQuizzes;
 
 
 function welcome(){
@@ -34,7 +35,7 @@ function getQuizzes(){
 }
 
 function renderQuizzes(success){
-  let APIQuizzes = success.data;
+  APIQuizzes = success.data;
   quizzesContainer.innerHTML = null;
   for (let i = 0; i < APIQuizzes.length; i++){
     quizzesContainer.innerHTML += `
@@ -53,9 +54,13 @@ function initialInfoQuizz(){
     <h2>Comece pelo começo</h2>
     <div class="infoContainer">
       <input placeholder="Título do seu quizz" type="text" minlength="20" maxlength="65">
+      <div class="hidden">O título deve ter entre 20 e 65 caracteres. :(</div>
       <input type="url" placeholder="URL da imagem do seu quizz">
-      <input placeholder="Quantidade de perguntas do quizz" type="number" min="3">
-      <input placeholder="Quantidade de níveis do quizz" type="number" min="2">
+      <div class="hidden">O valor informado não é uma URL válida. :(</div>
+      <input placeholder="Quantidade de perguntas do quizz" type="number">
+      <div class="hidden">O quizz deve ter no mínimo 3 perguntas. :(</div>
+      <input placeholder="Quantidade de níveis do quizz" type="number">
+      <div class="hidden">O quizz deve ter no mínimo 2 níveis. :(</div>
     </div>
     <button onclick="createQuestions()">Prosseguir para criar perguntas</button>
   </div>`
@@ -63,51 +68,116 @@ function initialInfoQuizz(){
 }
 
 function createQuestions(){
+
   const allInputs = document.querySelector(".infoContainer");
-  title = allInputs.querySelector("input:nth-child(1)").value;
-  url = allInputs.querySelector("input:nth-child(2)").value;
-  numberOfQuestions = allInputs.querySelector("input:nth-child(3)").value;
-  numberOfLevels = allInputs.querySelector("input:nth-child(4)").value;
-  container.innerHTML = null;
-  container.innerHTML = `
-    <div class="questionsQuizz">
-      <h2>Crie suas perguntas</h2>
-      <div class="maxiQuestion" onclick="hideOption(this)">
-        <div class="questionDescription">
-          <h3>Pergunta 1</h3>
-          <input placeholder="Texto da pergunta">
-          <input placeholder="Cor de fundo da pergunta">
+  title = allInputs.querySelector("input:nth-of-type(1)").value;
+  url = allInputs.querySelector("input:nth-of-type(2)").value;
+  numberOfQuestions = allInputs.querySelector("input:nth-of-type(3)").value;
+  numberOfLevels = allInputs.querySelector("input:nth-of-type(4)").value;
+  if (!titleValidation() || !urlValidation() || !questionNumberValidation() || !levelNumberValidation()){
+    titleValidation()
+    urlValidation()
+    questionNumberValidation()
+    levelNumberValidation()
+  } else{
+    container.innerHTML = null;
+    container.innerHTML = `
+      <div class="questionsQuizz">
+        <h2>Crie suas perguntas</h2>
+        <div class="maxiQuestion" onclick="hideOption(this)">
+          <div class="questionDescription">
+            <h3>Pergunta 1</h3>
+            <input placeholder="Texto da pergunta">
+            <input placeholder="Cor de fundo da pergunta">
+          </div>
+          <div class="correctAnswer">
+            <h3>Resposta correta</h3>
+            <input placeholder="Resposta correta">
+            <input placeholder="URL da imagem">
+          </div>
+          <div class="wrongAnswers">
+            <h3>Respostas incorretas</h3>
+            <input placeholder="Resposta incorreta 1">
+            <input placeholder="URL da imagem 1">
+            <div></div>
+            <input placeholder="Resposta incorreta 2">
+            <input placeholder="URL da imagem 2">
+            <div></div>
+            <input placeholder="Resposta incorreta 3">
+            <input placeholder="URL da imagem 3">
+            <div></div>
+          </div>
         </div>
-        <div class="correctAnswer">
-          <h3>Resposta correta</h3>
-          <input placeholder="Resposta correta">
-          <input placeholder="URL da imagem">
+        <div class="miniQuestion" onclick="hideOption(this)">
+          <h3>Pergunta 2</h3>
+          <ion-icon name="create-outline"></ion-icon>
         </div>
-        <div class="wrongAnswers">
-          <h3>Respostas incorretas</h3>
-          <input placeholder="Resposta incorreta 1">
-          <input placeholder="URL da imagem 1">
-          <div></div>
-          <input placeholder="Resposta incorreta 2">
-          <input placeholder="URL da imagem 2">
-          <div></div>
-          <input placeholder="Resposta incorreta 3">
-          <input placeholder="URL da imagem 3">
-          <div></div>
+        <div class="miniQuestion" onclick="hideOption(this)">
+          <h3>Pergunta 3</h3>
+          <ion-icon name="create-outline"></ion-icon>
         </div>
-      </div>
-      <div class="miniQuestion" onclick="hideOption(this)">
-        <h3>Pergunta 2</h3>
-        <ion-icon name="create-outline"></ion-icon>
-      </div>
-      <div class="miniQuestion" onclick="hideOption(this)">
-        <h3>Pergunta 3</h3>
-        <ion-icon name="create-outline"></ion-icon>
-      </div>
-      <button>Prosseguir para criar níveis</button>
-    </div>`
+        <button>Prosseguir para criar níveis</button>
+      </div>`
+  }
 }
 
+function titleValidation(){
+  let titleMessage = document.querySelector(".infoContainer > div:nth-of-type(1)")
+  if(title.length < 20){
+    titleMessage.classList.remove("hidden");
+    titleMessage.classList.add("validation");
+    return false
+  } else{
+    titleMessage.classList.add("hidden");
+    titleMessage.classList.remove("validation");
+    return true
+  }
+}
+
+function urlValidation(){
+  let urlMessage = document.querySelector(".infoContainer > div:nth-of-type(2)")
+  let pattern = new RegExp('^(https?:\\/\\/)?'+ 
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ 
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ 
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ 
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ 
+    '(\\#[-a-z\\d_]*)?$','i'); 
+  if (pattern.test(url)) {
+    urlMessage.classList.add("hidden");
+    urlMessage.classList.remove("validation");
+    return true
+  } else {
+    urlMessage.classList.remove("hidden");
+    urlMessage.classList.add("validation");
+    return false
+  }
+}
+
+function questionNumberValidation(){
+  let questionsMessage = document.querySelector(".infoContainer > div:nth-of-type(3)")
+  if(numberOfQuestions < 3){
+    questionsMessage.classList.remove("hidden");
+    questionsMessage.classList.add("validation");
+    return false
+  } else{
+    questionsMessage.classList.add("hidden");
+    questionsMessage.classList.remove("validation");
+    return true
+  }
+}
+
+function levelNumberValidation(){
+  let levelsMessage = document.querySelector(".infoContainer > div:nth-of-type(4)")
+  if(numberOfLevels < 2){
+    levelsMessage.classList.remove("hidden");
+    levelsMessage.classList.add("validation");
+    return false
+  } else{
+    levelsMessage.classList.add("hidden");
+    levelsMessage.classList.remove("validation");
+    return true
+  }
+}
 
 function goToQuizz(){
   container.innerHTML = null;
@@ -115,13 +185,13 @@ function goToQuizz(){
   <main>
     <div class="banner-quizz">
       <div class="opacity60">
-        <p>O quão Potterhead é você?</p>
+        <p>${APIQuizzes[1].title}</p>
       </div>
-      <img src="" alt="" />
+      <img src="${APIQuizzes[1].image}" alt="" />
     </div>
     <div class="play-quizz">
       <div class="banner-play-quizz">
-        <p>Em qual animal Olho-Tonto Moody transfigurou Malfoy?</p>
+        <p>${APIQuizzes[1].questions[0].title}</p>
       </div>
       <div class="answers-quizz">
         <div class="answer">
