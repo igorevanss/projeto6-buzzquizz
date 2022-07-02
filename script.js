@@ -1,4 +1,5 @@
 const container = document.querySelector(".DOMcontainer");
+let createdQuizzID = [];
 welcome()
 const quizzesContainer = document.querySelector(".quizzes-container");
 let APIQuizzes;
@@ -11,7 +12,7 @@ let questionObject = [];
 let levelDataStorage = [];
 let levelObject = [];
 let objectQuizz = [];
-let createdQuizzID = [];
+
 
 function welcome(){
   const container = document.querySelector(".DOMcontainer");
