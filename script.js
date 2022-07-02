@@ -343,7 +343,7 @@ function levelPercentValidation(){
 function without0Percent(){
   let zeroPercentInput = document.querySelectorAll(".minPercent");
   for (let i = 0; i < zeroPercentInput.length; i++){
-    if(zeroPercentInput[i].value === "0"){  
+    if(zeroPercentInput[i].value == 0){  
       return false
     }
   }
@@ -400,7 +400,7 @@ function createLevels(){
           <h3>Nível ${i}</h3>
           <input placeholder="Título do nível" class="title">
           <div class="hidden">O título deve ter, pelo menos, 10 caracteres. :(</div>
-          <input placeholder="% de acerto mínima"  class="minPercent">
+          <input placeholder="% de acerto mínima"  class="minPercent" type="number">
           <div class="hidden">Insira um valor de 0 a 100. :(</div>
           <input placeholder="URL da imagem do nível" class="url">
           <div class="hidden">O valor informado não é uma URL válida. :(</div>
@@ -482,13 +482,11 @@ function createQuestionObject(){
 function successQuizz(){
   storageLevelInfos()
   if (levelTitleValidation() || levelUrlValidation() || levelPercentValidation() || levelDescriptionValidation()){
-    console.log("to aqui")
     levelTitleValidation()
     levelUrlValidation()
     levelPercentValidation()
     levelDescriptionValidation()
    } else if (without0Percent()){
-     console.log("to aqui")
      alert("Você precisa definir pelo menos um nível com porcentagem 0!!!")
      return
    } else {
@@ -516,9 +514,9 @@ function storageLevelInfos(){
   
     for(let i = 0; i < level.length; i++){
       title = level[i].querySelector("input:nth-of-type(1)").value;
-      image = level[i].querySelector("input:nth-of-type(2)").value;
-      text = level[i].querySelector("input:nth-of-type(3)").value;
-      minValue = level[i].querySelector("input:nth-of-type(4)").value
+      minValue = level[i].querySelector("input:nth-of-type(2)").value;
+      image = level[i].querySelector("input:nth-of-type(3)").value;
+      text = level[i].querySelector("input:nth-of-type(4)").value;
       levelDataStorage.push([title, image, text, minValue])
       title = null;
       image = null;
@@ -548,7 +546,18 @@ function objectDone(){
     questions: questionObject,
     levels: levelObject
   }
+  const promise = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", objectQuizz);
+  promise.catch((err) => {
+    erro = err.response.data
+    console.log("erro")
+  })
+  promise.then(saveQuizz);
 }
+
+function saveQuizz(valor){
+  console.log(valor.data)
+}
+
 
 
 
