@@ -272,6 +272,7 @@ function colorValidation(){
 }
 
 function questionURLValidation(){
+  let bool;
   let allMaxi = document.querySelectorAll(".maxiQuestion")
   let validation = document.querySelectorAll(".invalidInput")
   let cont = 0;
@@ -287,25 +288,28 @@ function questionURLValidation(){
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.add("hidden");
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.remove("validation");
         allMaxi[i].querySelectorAll(".url")[cont].classList.remove("invalidInput");
+        if (bool === true){
+          bool = true;
+        } else {bool = false}
       } else {
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.remove("hidden");
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.add("validation");
         allMaxi[i].querySelectorAll(".url")[cont].classList.add("invalidInput");
+        if (bool === true || bool === undefined){
+          bool = true;
+        } else {bool = true}
       }
       cont ++
     }
     cont = 0;
   }
-  if(validation.length === 0){
-    return false
-  } else {
-    return true
-  }
+  return bool
 }
 
 
 
 function questionTitleValidation(){
+  let bool;
   let allMaxi = document.querySelectorAll(".maxiQuestion")
   let validation = document.querySelectorAll(".invalidInput")
   let cont = 0;
@@ -315,20 +319,22 @@ function questionTitleValidation(){
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.add("hidden");
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.remove("validation");
         allMaxi[i].querySelectorAll(".answer")[cont].classList.remove("invalidInput");
+        if (bool === true){
+          bool = true;
+        } else {bool = false}
       } else {
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.remove("hidden");
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.add("validation");
         allMaxi[i].querySelectorAll(".answer")[cont].classList.add("invalidInput");
+        if (bool === true || bool === undefined){
+          bool = true;
+        } else {bool = true}
       }
       cont ++
     }
     cont = 0;
   }
-  if(validation.length === 0){
-    return false
-  } else {
-    return true
-  }
+  return bool
 }
 
 function levelTitleValidation(){
