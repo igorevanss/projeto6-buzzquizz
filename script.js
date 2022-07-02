@@ -272,8 +272,8 @@ function colorValidation(){
 }
 
 function questionURLValidation(){
-  let bool
   let allMaxi = document.querySelectorAll(".maxiQuestion")
+  let validation = document.querySelectorAll(".invalidInput")
   let cont = 0;
   let pattern = new RegExp('^(https?:\\/\\/)?'+ 
     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ 
@@ -281,49 +281,54 @@ function questionURLValidation(){
     '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ 
     '(\\?[;&a-z\\d%_.~+=-]*)?'+ 
     '(\\#[-a-z\\d_]*)?$','i'); 
-  let answersArray = questionObject.map((value) => value.answers)
   for (let i=0; i < allMaxi.length; i++){
-    while (cont < answersArray[i].length){
-      if (pattern.test(allMaxi[i].querySelectorAll(".url")[cont].value)) {
+    while (cont < questionObject[i].answers.length){
+      if (pattern.test(allMaxi[i].querySelectorAll(".url")[cont].value) || allMaxi[i].querySelectorAll(".url")[cont].value !== "") {
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.add("hidden");
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.remove("validation");
         allMaxi[i].querySelectorAll(".url")[cont].classList.remove("invalidInput");
-        bool = false
       } else {
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.remove("hidden");
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.add("validation");
         allMaxi[i].querySelectorAll(".url")[cont].classList.add("invalidInput");
-        bool = true
       }
       cont ++
     }
     cont = 0;
   }
-  return bool
+  if(validation.length === 0){
+    return false
+  } else {
+    return true
+  }
 }
+
+
 
 function questionTitleValidation(){
   let allMaxi = document.querySelectorAll(".maxiQuestion")
+  let validation = document.querySelectorAll(".invalidInput")
   let cont = 0;
-  let answersArray = questionObject.map((value) => value.answers)
   for (let i=0; i < allMaxi.length; i++){
-    while (cont < answersArray[i].length){
+    while (cont < questionObject[i].answers.length){
       if (allMaxi[i].querySelectorAll(".answer")[cont].value !== "") {
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.add("hidden");
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.remove("validation");
         allMaxi[i].querySelectorAll(".answer")[cont].classList.remove("invalidInput");
-        bool = false
       } else {
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.remove("hidden");
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.add("validation");
         allMaxi[i].querySelectorAll(".answer")[cont].classList.add("invalidInput");
-        bool = true
       }
       cont ++
     }
     cont = 0;
   }
-  return bool
+  if(validation.length === 0){
+    return false
+  } else {
+    return true
+  }
 }
 
 function levelTitleValidation(){
