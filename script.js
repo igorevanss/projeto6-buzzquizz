@@ -11,11 +11,13 @@ let questionObject = [];
 let levelDataStorage = [];
 let levelObject = [];
 let objectQuizz = [];
+let createdQuizzID = [];
 
 function welcome(){
   const container = document.querySelector(".DOMcontainer");
   container.innerHTML = null
-  container.innerHTML += `
+  if(createdQuizzID.length === 0){
+    container.innerHTML += `
     <main>
       <div class="make-quizz">
         <span>Você não criou nenhum quizz ainda :(</span>
@@ -26,6 +28,20 @@ function welcome(){
         <div class="quizzes-container"></div>
       </div>
     </main>`
+  } else {
+    container.innerHTML += `
+    <main>
+      <div class="make-quizz">
+        <span>Você não criou nenhum quizz ainda :(</span>
+        <button onclick="initialInfoQuizz()">Criar Quizz</button>
+      </div>
+      <div class="all-quizzes">
+        <h2>Todos os Quizzes</h2>
+        <div class="quizzes-container"></div>
+      </div>
+    </main>`
+  }
+  
   getQuizzes()
 }
 
@@ -497,6 +513,7 @@ function successQuizz(){
       <div>
         <img src="${url}">
         <div class="opacity"></div>
+        <p>${title}</p>
       </div>
       <button>Acessar Quizz</button>
       <span>Voltar pra home</span>
@@ -555,7 +572,10 @@ function objectDone(){
 }
 
 function saveQuizz(valor){
-  console.log(valor.data)
+  const newQuizz = valor.data;
+  createdQuizzID.push(newQuizz.id)
+  const newQuizzSerializado = JSON.stringify(newQuizz);
+  localStorage.setItem(`${newQuizz.id}`, newQuizzSerializado)
 }
 
 

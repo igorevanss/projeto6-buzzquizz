@@ -37,7 +37,7 @@ main{
 }
 
 .make-quizz {
-  width: 1050px;
+  width: 1070px;
   height: 180px;
   border: 1px dashed #D5D5D5;
   margin: 77px 0;
@@ -75,18 +75,18 @@ h2{
 }
 
 .all-quizzes {
-  width: 1050px;
+  width: 1070px;
 }
 
 .quizzes-container {
-  width: 1050px;
+  width: 1070px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
 .quizzes-container > div{
-  width: 320px;
+  width: 340px;
   height: 180px;
   margin: 15px 7px 0 7px;
   border-radius: 5px;
@@ -95,12 +95,13 @@ h2{
 }
 
 .all-quizzes img, .quizzFinished img{
-  width: 320px;
+  width: 340px;
   height: 180px;
+  object-fit: cover;
 }
 
 .opacity{
-  width: 320px;
+  width: 340px;
   height: 180px;
   background: linear-gradient(to top, black, rgba(255, 255, 255, 0) 75%);
   border-radius: 5px;
@@ -246,8 +247,8 @@ h2{
 }
 
 .quizzFinished > div{
-  width: 320px;
-  height: 180px;
+  width: 500px;
+  height: 266px;
   border-radius: 5px;
   position: relative;
   overflow: hidden;
@@ -257,6 +258,31 @@ h2{
   width: 220px;
   height: 45px;
   margin: 45px 0 20px 0;
+}
+
+.quizzFinished img{
+  width: 500px;
+  height: 266px;
+  object-fit: cover;
+}
+
+.quizzFinished .opacity{
+  width: 500px;
+  height: 266px;
+  background: linear-gradient(to top, black, rgba(255, 255, 255, 0) 75%);
+  border-radius: 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.quizzFinished p{
+  position: absolute;
+  bottom: 23px;
+  left: 20px;
+  font-size: 25px;
+  font-weight: 400;
+  color: #FFFFFF
 }
 /*FIM TELA 3*/
 
@@ -424,21 +450,62 @@ main > p {
     justify-content: center;
   }
 
-  /*Break-point para tratar as telas de criação do quizz*/
+  .quizzes-container > div{
+    width: 100%;
+    margin: 7.5px;
+  }
+  
+  .all-quizzes img, .quizzFinished img{
+    width: 100%;
+  }
+
+  .opacity{
+    width: 100%;
+  }
+
+  .basicInfos > h2, .questionsQuizz > h2, .quizzLevels > h2{
+    margin-top: 40px;
+  }
+
+  .infoContainer, .miniQuestion, .maxiQuestion, .maxiLevel, .miniLevel, .questionsQuizz{
+    width: 100%;
+  }
+
+  .questionSizes, .levelSizes{
+    width: 100%;
+  }
+
+  .miniQuestion, .maxiQuestion, .miniLevel, .maxiLevel{
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .basicInfos button, .questionsQuizz button, .quizzLevels button{
+    width: 325px;
+    margin: 30px 25px;
+  }
+
+  .quizzFinished div{
+    width: 90%;
+  }
+
+  .quizzFinished .opacity{
+    width: 100%;
+  }
+
+  .quizzFinished p{
+    font-size: 19px;
+  }
+}
+
+
+
+
+
+  /*Break-point para tratar as telas de criação do quizz
 
   @media (max-width: 600px){
-    .basicInfos > h2, .questionsQuizz > h2, .quizzLevels > h2{
-      margin-top: 40px;
-    }
 
-    .infoContainer, .miniQuestion, .maxiQuestion, .maxiLevel, .miniLevel{
-      width: 100%;
-    }
-
-    .basicInfos button, .questionsQuizz button, .quizzLevels button{
-      width: 325px;
-      margin: 85px 25px;
-    }
 
     .play-quizz {
       width: 100%;
@@ -459,6 +526,4 @@ main > p {
       
     }
 
-  }
-}
-
+  }*/
