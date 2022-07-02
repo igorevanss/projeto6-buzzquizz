@@ -27,6 +27,16 @@ header {
   top: 0px;
 }
 
+button:hover, .myQuizzes ion-icon:hover{
+  cursor: pointer;
+  filter: brightness(1.6);
+}
+
+.myQuizzesContainer div:hover, .quizzes-container div:hover{
+  cursor: pointer;
+  filter: brightness(0.8);
+}
+
 main{
   margin-top: 70px;
   width: 100%;
@@ -189,6 +199,10 @@ h2{
   margin: 5px 0;
   font-size: 19px;
   outline-color: #EC362D;
+}
+
+.invalidInput{
+  background-color: #FFE9E9;
 }
 
 .infoContainer input::placeholder, .questionDescription input::placeholder, .correctAnswer input::placeholder, .wrongAnswers input::placeholder, .maxiLevel input::placeholder{

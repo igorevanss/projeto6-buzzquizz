@@ -14,8 +14,6 @@ let levelObject = [];
 let objectQuizz = [];
 let valueQuizz;
 
-
-
 function welcome(){
   const container = document.querySelector(".DOMcontainer");
   container.innerHTML = null
@@ -188,10 +186,12 @@ function titleValidation(){
     if(allTitleInput[i].value.length < 20){
       allTitleInput[i].nextElementSibling.classList.remove("hidden");
       allTitleInput[i].nextElementSibling.classList.add("validation");
+      allTitleInput[i].classList.add("invalidInput");
       bool = true
     } else{
       allTitleInput[i].nextElementSibling.classList.add("hidden");
       allTitleInput[i].nextElementSibling.classList.remove("validation");
+      allTitleInput[i].classList.remove("invalidInput");
     }
   }
   return bool
@@ -199,6 +199,7 @@ function titleValidation(){
 
 function urlQuizzValidation(){
   let urlMessage = document.querySelector(".infoContainer > div:nth-of-type(2)")
+  let input = document.querySelector(".infoContainer > input:nth-of-type(2)")
   let pattern = new RegExp('^(https?:\\/\\/)?'+ 
     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ 
     '((\\d{1,3}\\.){3}\\d{1,3}))'+ 
@@ -208,36 +209,44 @@ function urlQuizzValidation(){
   if (pattern.test(url)) {
     urlMessage.classList.add("hidden");
     urlMessage.classList.remove("validation");
+    input.classList.remove("invalidInput");
     return false
   } else {
     urlMessage.classList.remove("hidden");
     urlMessage.classList.add("validation");
+    input.classList.add("invalidInput");
     return true
   }
 }
 
 function questionNumberValidation(){
   let questionsMessage = document.querySelector(".infoContainer > div:nth-of-type(3)")
+  let input = document.querySelector(".infoContainer > input:nth-of-type(3)")
   if(numberOfQuestions < 3){
     questionsMessage.classList.remove("hidden");
     questionsMessage.classList.add("validation");
+    input.classList.add("invalidInput");
     return true
   } else{
     questionsMessage.classList.add("hidden");
     questionsMessage.classList.remove("validation");
+    input.classList.remove("invalidInput");
     return false
   }
 }
 
 function levelNumberValidation(){
   let levelsMessage = document.querySelector(".infoContainer > div:nth-of-type(4)")
+  let input = document.querySelector(".infoContainer > input:nth-of-type(4)")
   if(numberOfLevels < 2){
     levelsMessage.classList.remove("hidden");
     levelsMessage.classList.add("validation");
+    input.classList.add("invalidInput");
     return true
   } else{
     levelsMessage.classList.add("hidden");
     levelsMessage.classList.remove("validation");
+    input.classList.remove("invalidInput");
     return false
   }
 }
@@ -250,10 +259,12 @@ function colorValidation(){
     if (patternColor.test(allColorInput[i].value)) {
       allColorInput[i].nextElementSibling.classList.add("hidden");
       allColorInput[i].nextElementSibling.classList.remove("validation");
+      allColorInput[i].classList.remove("invalidInput");
       bool = false
     } else {
       allColorInput[i].nextElementSibling.classList.remove("hidden");
       allColorInput[i].nextElementSibling.classList.add("validation");
+      allColorInput[i].classList.add("invalidInput");
       bool = true
     }
   }
@@ -276,10 +287,12 @@ function questionURLValidation(){
       if (pattern.test(allMaxi[i].querySelectorAll(".url")[cont].value)) {
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.add("hidden");
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.remove("validation");
+        allMaxi[i].querySelectorAll(".url")[cont].classList.remove("invalidInput");
         bool = false
       } else {
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.remove("hidden");
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.add("validation");
+        allMaxi[i].querySelectorAll(".url")[cont].classList.add("invalidInput");
         bool = true
       }
       cont ++
@@ -298,10 +311,12 @@ function questionTitleValidation(){
       if (allMaxi[i].querySelectorAll(".answer")[cont].value !== "") {
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.add("hidden");
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.remove("validation");
+        allMaxi[i].querySelectorAll(".answer")[cont].classList.remove("invalidInput");
         bool = false
       } else {
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.remove("hidden");
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.add("validation");
+        allMaxi[i].querySelectorAll(".answer")[cont].classList.add("invalidInput");
         bool = true
       }
       cont ++
@@ -318,10 +333,12 @@ function levelTitleValidation(){
     if(allTitleInput[i].value.length < 10){
       allTitleInput[i].nextElementSibling.classList.remove("hidden");
       allTitleInput[i].nextElementSibling.classList.add("validation");
+      allTitleInput[i].classList.add("invalidInput");
       bool = true
     } else{
       allTitleInput[i].nextElementSibling.classList.add("hidden");
       allTitleInput[i].nextElementSibling.classList.remove("validation");
+      allTitleInput[i].classList.remove("invalidInput");
       bool = false
     }
   }
@@ -341,10 +358,12 @@ function levelUrlValidation(){
     if (pattern.test(totalMaxi[i].value)) {
       totalMaxi[i].nextElementSibling.classList.add("hidden");
       totalMaxi[i].nextElementSibling.classList.remove("validation");
+      totalMaxi[i].classList.remove("invalidInput");
       bool = false
     } else {
       totalMaxi[i].nextElementSibling.classList.remove("hidden");
       totalMaxi[i].nextElementSibling.classList.add("validation");
+      totalMaxi[i].classList.add("invalidInput");
       bool = true
     }
   } 
@@ -358,10 +377,12 @@ function levelDescriptionValidation(){
     if(allDescriptionInput[i].value.length < 30){
       allDescriptionInput[i].nextElementSibling.classList.remove("hidden");
       allDescriptionInput[i].nextElementSibling.classList.add("validation");
+      allDescriptionInput[i].classList.add("invalidInput");
       bool = true
     } else{
       allDescriptionInput[i].nextElementSibling.classList.add("hidden");
       allDescriptionInput[i].nextElementSibling.classList.remove("validation");
+      allDescriptionInput[i].classList.remove("invalidInput");
       bool = false
     }
   }
@@ -375,10 +396,12 @@ function levelPercentValidation(){
     if(allPercentInput[i].value < 0 || allPercentInput[i].value > 100 || allPercentInput[i].value === ""){  
       allPercentInput[i].nextElementSibling.classList.remove("hidden");
       allPercentInput[i].nextElementSibling.classList.add("validation");
+      allPercentInput[i].classList.add("invalidInput");
       bool = true
     } else{
       allPercentInput[i].nextElementSibling.classList.add("hidden");
       allPercentInput[i].nextElementSibling.classList.remove("validation");
+      allPercentInput[i].classList.remove("invalidInput");
       bool = false
     }
   }
