@@ -1,5 +1,5 @@
 const container = document.querySelector(".DOMcontainer");
-let createdQuizzID = [];
+let myQuizzesArray = [];
 welcome()
 const quizzesContainer = document.querySelector(".quizzes-container");
 let APIQuizzes;
@@ -14,37 +14,62 @@ let levelObject = [];
 let objectQuizz = [];
 let valueQuizz;
 
-
 function welcome(){
   const container = document.querySelector(".DOMcontainer");
   container.innerHTML = null
-  if(createdQuizzID.length === 0){
-    container.innerHTML += `
-    <main>
-      <div class="make-quizz">
-        <span>Você não criou nenhum quizz ainda :(</span>
-        <button onclick="initialInfoQuizz()">Criar Quizz</button>
-      </div>
-      <div class="all-quizzes">
-        <h2>Todos os Quizzes</h2>
-        <div class="quizzes-container"></div>
-      </div>
-    </main>`
-  } else {
-    container.innerHTML += `
-    <main>
-      <div class="make-quizz">
-        <span>Você não criou nenhum quizz ainda :(</span>
-        <button onclick="initialInfoQuizz()">Criar Quizz</button>
-      </div>
-      <div class="all-quizzes">
-        <h2>Todos os Quizzes</h2>
-        <div class="quizzes-container"></div>
-      </div>
-    </main>`
-  }
-  
+  container.innerHTML += `
+  <main>
+    <div class="make-quizz">
+      <span>Você não criou nenhum quizz ainda :(</span>
+      <button onclick="initialInfoQuizz()">Criar Quizz</button>
+    </div>
+    <div class="all-quizzes">
+      <h2>Todos os Quizzes</h2>
+      <div class="quizzes-container"></div>
+    </div>
+  </main>`
   getQuizzes()
+
+  if (localStorage.length !== 0){
+    container.innerHTML = null
+    container.innerHTML += `
+    <main>
+      <div class="myQuizzes">
+        <div class="myQuizzesHeader">
+          <h2>Seus Quizzes</h2>
+          <ion-icon name="add-circle-sharp" onclick="initialInfoQuizz()"></ion-icon>
+        </div>
+        <div class="myQuizzesContainer"></div>
+      </div>
+      <div class="all-quizzes">
+        <h2>Todos os Quizzes</h2>
+        <div class="quizzes-container"></div>
+      </div>
+    </main>`
+    getMyQuizzes()
+  }
+}
+
+function getMyQuizzes(){
+  for(let i = 0; i < localStorage.length; i++){
+    const getLocal = localStorage.getItem(localStorage.key(i));
+    const myQuizz = JSON.parse(getLocal)
+    myQuizzesArray.push(myQuizz)
+  }
+  renderMyQuizzes()
+}
+
+function renderMyQuizzes() {
+  let myQuizzesContainer = document.querySelector(".myQuizzesContainer") 
+  myQuizzesContainer.innerHTML = null
+  for (let i = 0; i < myQuizzesArray.length; i++) {
+    myQuizzesContainer.innerHTML += `
+    <div onclick="goToQuizz(this)" id="${myQuizzesArray[i].id}">
+      <img src=${myQuizzesArray[i].image}>
+      <h3>${myQuizzesArray[i].title}</h3>
+      <div class="opacity"></div>
+    </div>`
+  }
 }
 
 function getQuizzes() {
@@ -161,10 +186,12 @@ function titleValidation(){
     if(allTitleInput[i].value.length < 20){
       allTitleInput[i].nextElementSibling.classList.remove("hidden");
       allTitleInput[i].nextElementSibling.classList.add("validation");
+      allTitleInput[i].classList.add("invalidInput");
       bool = true
     } else{
       allTitleInput[i].nextElementSibling.classList.add("hidden");
       allTitleInput[i].nextElementSibling.classList.remove("validation");
+      allTitleInput[i].classList.remove("invalidInput");
     }
   }
   return bool
@@ -172,6 +199,7 @@ function titleValidation(){
 
 function urlQuizzValidation(){
   let urlMessage = document.querySelector(".infoContainer > div:nth-of-type(2)")
+  let input = document.querySelector(".infoContainer > input:nth-of-type(2)")
   let pattern = new RegExp('^(https?:\\/\\/)?'+ 
     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ 
     '((\\d{1,3}\\.){3}\\d{1,3}))'+ 
@@ -181,36 +209,44 @@ function urlQuizzValidation(){
   if (pattern.test(url)) {
     urlMessage.classList.add("hidden");
     urlMessage.classList.remove("validation");
+    input.classList.remove("invalidInput");
     return false
   } else {
     urlMessage.classList.remove("hidden");
     urlMessage.classList.add("validation");
+    input.classList.add("invalidInput");
     return true
   }
 }
 
 function questionNumberValidation(){
   let questionsMessage = document.querySelector(".infoContainer > div:nth-of-type(3)")
+  let input = document.querySelector(".infoContainer > input:nth-of-type(3)")
   if(numberOfQuestions < 3){
     questionsMessage.classList.remove("hidden");
     questionsMessage.classList.add("validation");
+    input.classList.add("invalidInput");
     return true
   } else{
     questionsMessage.classList.add("hidden");
     questionsMessage.classList.remove("validation");
+    input.classList.remove("invalidInput");
     return false
   }
 }
 
 function levelNumberValidation(){
   let levelsMessage = document.querySelector(".infoContainer > div:nth-of-type(4)")
+  let input = document.querySelector(".infoContainer > input:nth-of-type(4)")
   if(numberOfLevels < 2){
     levelsMessage.classList.remove("hidden");
     levelsMessage.classList.add("validation");
+    input.classList.add("invalidInput");
     return true
   } else{
     levelsMessage.classList.add("hidden");
     levelsMessage.classList.remove("validation");
+    input.classList.remove("invalidInput");
     return false
   }
 }
@@ -223,10 +259,12 @@ function colorValidation(){
     if (patternColor.test(allColorInput[i].value)) {
       allColorInput[i].nextElementSibling.classList.add("hidden");
       allColorInput[i].nextElementSibling.classList.remove("validation");
+      allColorInput[i].classList.remove("invalidInput");
       bool = false
     } else {
       allColorInput[i].nextElementSibling.classList.remove("hidden");
       allColorInput[i].nextElementSibling.classList.add("validation");
+      allColorInput[i].classList.add("invalidInput");
       bool = true
     }
   }
@@ -234,8 +272,8 @@ function colorValidation(){
 }
 
 function questionURLValidation(){
-  let bool
   let allMaxi = document.querySelectorAll(".maxiQuestion")
+  let validation = document.querySelectorAll(".invalidInput")
   let cont = 0;
   let pattern = new RegExp('^(https?:\\/\\/)?'+ 
     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ 
@@ -243,45 +281,54 @@ function questionURLValidation(){
     '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ 
     '(\\?[;&a-z\\d%_.~+=-]*)?'+ 
     '(\\#[-a-z\\d_]*)?$','i'); 
-  let answersArray = questionObject.map((value) => value.answers)
   for (let i=0; i < allMaxi.length; i++){
-    while (cont < answersArray[i].length){
-      if (pattern.test(allMaxi[i].querySelectorAll(".url")[cont].value)) {
+    while (cont < questionObject[i].answers.length){
+      if (pattern.test(allMaxi[i].querySelectorAll(".url")[cont].value) || allMaxi[i].querySelectorAll(".url")[cont].value !== "") {
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.add("hidden");
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.remove("validation");
-        bool = false
+        allMaxi[i].querySelectorAll(".url")[cont].classList.remove("invalidInput");
       } else {
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.remove("hidden");
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.add("validation");
-        bool = true
+        allMaxi[i].querySelectorAll(".url")[cont].classList.add("invalidInput");
       }
       cont ++
     }
     cont = 0;
   }
-  return bool
+  if(validation.length === 0){
+    return false
+  } else {
+    return true
+  }
 }
+
+
 
 function questionTitleValidation(){
   let allMaxi = document.querySelectorAll(".maxiQuestion")
+  let validation = document.querySelectorAll(".invalidInput")
   let cont = 0;
-  let answersArray = questionObject.map((value) => value.answers)
   for (let i=0; i < allMaxi.length; i++){
-    while (cont < answersArray[i].length){
+    while (cont < questionObject[i].answers.length){
       if (allMaxi[i].querySelectorAll(".answer")[cont].value !== "") {
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.add("hidden");
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.remove("validation");
-        bool = false
+        allMaxi[i].querySelectorAll(".answer")[cont].classList.remove("invalidInput");
       } else {
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.remove("hidden");
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.add("validation");
-        bool = true
+        allMaxi[i].querySelectorAll(".answer")[cont].classList.add("invalidInput");
       }
       cont ++
     }
     cont = 0;
   }
-  return bool
+  if(validation.length === 0){
+    return false
+  } else {
+    return true
+  }
 }
 
 function levelTitleValidation(){
@@ -291,10 +338,12 @@ function levelTitleValidation(){
     if(allTitleInput[i].value.length < 10){
       allTitleInput[i].nextElementSibling.classList.remove("hidden");
       allTitleInput[i].nextElementSibling.classList.add("validation");
+      allTitleInput[i].classList.add("invalidInput");
       bool = true
     } else{
       allTitleInput[i].nextElementSibling.classList.add("hidden");
       allTitleInput[i].nextElementSibling.classList.remove("validation");
+      allTitleInput[i].classList.remove("invalidInput");
       bool = false
     }
   }
@@ -314,10 +363,12 @@ function levelUrlValidation(){
     if (pattern.test(totalMaxi[i].value)) {
       totalMaxi[i].nextElementSibling.classList.add("hidden");
       totalMaxi[i].nextElementSibling.classList.remove("validation");
+      totalMaxi[i].classList.remove("invalidInput");
       bool = false
     } else {
       totalMaxi[i].nextElementSibling.classList.remove("hidden");
       totalMaxi[i].nextElementSibling.classList.add("validation");
+      totalMaxi[i].classList.add("invalidInput");
       bool = true
     }
   } 
@@ -331,10 +382,12 @@ function levelDescriptionValidation(){
     if(allDescriptionInput[i].value.length < 30){
       allDescriptionInput[i].nextElementSibling.classList.remove("hidden");
       allDescriptionInput[i].nextElementSibling.classList.add("validation");
+      allDescriptionInput[i].classList.add("invalidInput");
       bool = true
     } else{
       allDescriptionInput[i].nextElementSibling.classList.add("hidden");
       allDescriptionInput[i].nextElementSibling.classList.remove("validation");
+      allDescriptionInput[i].classList.remove("invalidInput");
       bool = false
     }
   }
@@ -348,10 +401,12 @@ function levelPercentValidation(){
     if(allPercentInput[i].value < 0 || allPercentInput[i].value > 100 || allPercentInput[i].value === ""){  
       allPercentInput[i].nextElementSibling.classList.remove("hidden");
       allPercentInput[i].nextElementSibling.classList.add("validation");
+      allPercentInput[i].classList.add("invalidInput");
       bool = true
     } else{
       allPercentInput[i].nextElementSibling.classList.add("hidden");
       allPercentInput[i].nextElementSibling.classList.remove("validation");
+      allPercentInput[i].classList.remove("invalidInput");
       bool = false
     }
   }
@@ -575,7 +630,6 @@ function objectDone(){
 
 function saveQuizz(valor){
   const newQuizz = valor.data;
-  createdQuizzID.push(newQuizz.id)
   const newQuizzSerializado = JSON.stringify(newQuizz);
   localStorage.setItem(`${newQuizz.id}`, newQuizzSerializado)
 }
@@ -672,7 +726,7 @@ function finishQuizz() {
       </div>
     </div>
     <button onclick=""><p>Reiniciar Quizz</p></button>
-    <p onclick="welcome()">Voltar pra home</p>
+    <p onclick="reload()">Voltar pra home</p>
   `
 }
 
