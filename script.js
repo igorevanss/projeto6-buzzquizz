@@ -10,6 +10,7 @@ let questionDataStorage = [];
 let questionObject = [];
 let levelDataStorage = [];
 let levelObject = [];
+let objectQuizz = [];
 
 function welcome(){
   const container = document.querySelector(".DOMcontainer");
@@ -76,12 +77,12 @@ function createQuestions(){
   url = allInputs.querySelector("input:nth-of-type(2)").value;
   numberOfQuestions = allInputs.querySelector("input:nth-of-type(3)").value;
   numberOfLevels = allInputs.querySelector("input:nth-of-type(4)").value;
-    // if (!titleValidation() || !urlQuizzValidation() || !questionNumberValidation() || !levelNumberValidation()){
-    //   titleValidation()
-    //   urlQuizzValidation()
-    //   questionNumberValidation()
-    //   levelNumberValidation()
-    // } else{
+    if (titleValidation() || urlQuizzValidation() || questionNumberValidation() || levelNumberValidation()){
+      titleValidation()
+      urlQuizzValidation()
+      questionNumberValidation()
+      levelNumberValidation()
+    } else{
     container.innerHTML = null;
     container.innerHTML = `
       <div class="questionsQuizz">
@@ -132,20 +133,23 @@ function createQuestions(){
         </div>` 
     }
     questionsContainer.innerHTML += `<button onclick="createLevels()">Prosseguir para criar níveis</button>`
+  }
 }
 
 function titleValidation(){
+  let bool
   let allTitleInput = document.querySelectorAll(".title");
   for (let i = 0; i < allTitleInput.length; i++){
     if(allTitleInput[i].value.length < 20){
       allTitleInput[i].nextElementSibling.classList.remove("hidden");
       allTitleInput[i].nextElementSibling.classList.add("validation");
+      bool = true
     } else{
       allTitleInput[i].nextElementSibling.classList.add("hidden");
       allTitleInput[i].nextElementSibling.classList.remove("validation");
     }
   }
-  return true
+  return bool
 }
 
 function urlQuizzValidation(){
@@ -159,11 +163,11 @@ function urlQuizzValidation(){
   if (pattern.test(url)) {
     urlMessage.classList.add("hidden");
     urlMessage.classList.remove("validation");
-    return true
+    return false
   } else {
     urlMessage.classList.remove("hidden");
     urlMessage.classList.add("validation");
-    return false
+    return true
   }
 }
 
@@ -172,11 +176,11 @@ function questionNumberValidation(){
   if(numberOfQuestions < 3){
     questionsMessage.classList.remove("hidden");
     questionsMessage.classList.add("validation");
-    return false
+    return true
   } else{
     questionsMessage.classList.add("hidden");
     questionsMessage.classList.remove("validation");
-    return true
+    return false
   }
 }
 
@@ -185,31 +189,35 @@ function levelNumberValidation(){
   if(numberOfLevels < 2){
     levelsMessage.classList.remove("hidden");
     levelsMessage.classList.add("validation");
-    return false
+    return true
   } else{
     levelsMessage.classList.add("hidden");
     levelsMessage.classList.remove("validation");
-    return true
+    return false
   }
 }
 
 function colorValidation(){
+  let bool
   let allColorInput = document.querySelectorAll(".color");
   for (let i = 0; i < allColorInput.length; i++){
     let patternColor = new RegExp("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"); 
     if (patternColor.test(allColorInput[i].value)) {
       allColorInput[i].nextElementSibling.classList.add("hidden");
       allColorInput[i].nextElementSibling.classList.remove("validation");
+      bool = false
     } else {
       allColorInput[i].nextElementSibling.classList.remove("hidden");
       allColorInput[i].nextElementSibling.classList.add("validation");
+      bool = true
     }
   }
-  return true
+  return bool
 }
 
-function titleURLValidation(){
-  let allMaxi = document.querySelectorAll(".maxiQuestion, .maxiLevel")
+function questionURLValidation(){
+  let bool
+  let allMaxi = document.querySelectorAll(".maxiQuestion")
   let cont = 0;
   let pattern = new RegExp('^(https?:\\/\\/)?'+ 
     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ 
@@ -217,43 +225,130 @@ function titleURLValidation(){
     '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ 
     '(\\?[;&a-z\\d%_.~+=-]*)?'+ 
     '(\\#[-a-z\\d_]*)?$','i'); 
-  let answersArray = questionObject.map((value) => value = value.answers)
+  let answersArray = questionObject.map((value) => value.answers)
   for (let i=0; i < allMaxi.length; i++){
     while (cont < answersArray[i].length){
       if (pattern.test(allMaxi[i].querySelectorAll(".url")[cont].value)) {
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.add("hidden");
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.remove("validation");
+        bool = false
       } else {
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.remove("hidden");
         allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.add("validation");
+        bool = true
       }
       cont ++
     }
     cont = 0;
   }
-  return true
+  return bool
 }
 
 function questionTitleValidation(){
   let allMaxi = document.querySelectorAll(".maxiQuestion")
   let cont = 0;
-  let answersArray = questionObject.map((value) => value = value.answers)
+  let answersArray = questionObject.map((value) => value.answers)
   for (let i=0; i < allMaxi.length; i++){
     while (cont < answersArray[i].length){
       if (allMaxi[i].querySelectorAll(".answer")[cont].value !== "") {
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.add("hidden");
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.remove("validation");
+        bool = false
       } else {
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.remove("hidden");
         allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.add("validation");
+        bool = true
       }
       cont ++
     }
     cont = 0;
   }
-  return true
+  return bool
 }
 
+function levelTitleValidation(){
+  let bool
+  let allTitleInput = document.querySelectorAll(".title");
+  for (let i = 0; i < allTitleInput.length; i++){
+    if(allTitleInput[i].value.length < 10){
+      allTitleInput[i].nextElementSibling.classList.remove("hidden");
+      allTitleInput[i].nextElementSibling.classList.add("validation");
+      bool = true
+    } else{
+      allTitleInput[i].nextElementSibling.classList.add("hidden");
+      allTitleInput[i].nextElementSibling.classList.remove("validation");
+      bool = false
+    }
+  }
+  return bool
+}
+
+function levelUrlValidation(){
+  let bool
+  let totalMaxi = document.querySelectorAll(".url")
+  let pattern = new RegExp('^(https?:\\/\\/)?'+ 
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ 
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ 
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ 
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ 
+    '(\\#[-a-z\\d_]*)?$','i');
+  for(let i = 0; i < totalMaxi.length; i++){
+    if (pattern.test(totalMaxi[i].value)) {
+      totalMaxi[i].nextElementSibling.classList.add("hidden");
+      totalMaxi[i].nextElementSibling.classList.remove("validation");
+      bool = false
+    } else {
+      totalMaxi[i].nextElementSibling.classList.remove("hidden");
+      totalMaxi[i].nextElementSibling.classList.add("validation");
+      bool = true
+    }
+  } 
+  return bool
+}
+
+function levelDescriptionValidation(){
+  let bool
+  let allDescriptionInput = document.querySelectorAll(".description");
+  for (let i = 0; i < allDescriptionInput.length; i++){
+    if(allDescriptionInput[i].value.length < 30){
+      allDescriptionInput[i].nextElementSibling.classList.remove("hidden");
+      allDescriptionInput[i].nextElementSibling.classList.add("validation");
+      bool = true
+    } else{
+      allDescriptionInput[i].nextElementSibling.classList.add("hidden");
+      allDescriptionInput[i].nextElementSibling.classList.remove("validation");
+      bool = false
+    }
+  }
+  return bool
+}
+
+function levelPercentValidation(){
+  let bool
+  let allPercentInput = document.querySelectorAll(".minPercent");
+  for (let i = 0; i < allPercentInput.length; i++){
+    if(allPercentInput[i].value < 0 || allPercentInput[i].value > 100 || allPercentInput[i].value === ""){  
+      allPercentInput[i].nextElementSibling.classList.remove("hidden");
+      allPercentInput[i].nextElementSibling.classList.add("validation");
+      bool = true
+    } else{
+      allPercentInput[i].nextElementSibling.classList.add("hidden");
+      allPercentInput[i].nextElementSibling.classList.remove("validation");
+      bool = false
+    }
+  }
+  return bool
+}
+
+function without0Percent(){
+  let zeroPercentInput = document.querySelectorAll(".minPercent");
+  for (let i = 0; i < zeroPercentInput.length; i++){
+    if(zeroPercentInput[i].value === "0"){  
+      return false
+    }
+  }
+  return true
+}
   
 function hideOption(element){
   const optionSizes = element.parentNode
@@ -282,13 +377,12 @@ function hideOption(element){
 
 function createLevels(){
   storageQuestionInfos()
-  // if (!titleValidation() || !titleURLValidation() || !colorValidation() || !questionTitleValidation()){
-  //   titleValidation()
-  //   questionURLValidation()
-  //   colorValidation();
-  //   questionTitleValidation()
-  //  } else{
-
+  if (titleValidation() || questionURLValidation() || colorValidation() || questionTitleValidation()){
+    titleValidation()
+    questionURLValidation()
+    colorValidation();
+    questionTitleValidation()
+   } else{
     container.innerHTML = null;
     container.innerHTML = `
       <div class="quizzLevels">
@@ -316,6 +410,7 @@ function createLevels(){
       </div>`
     }
     levelsContainer.innerHTML += `<button onclick="successQuizz()">Finalizar Quizz</button>`
+  }
 }
 
 function storageQuestionInfos(){
@@ -324,7 +419,6 @@ const question = document.querySelectorAll(".maxiQuestion");
   let questionInfo = [];
   let correct = [];
   let wrong = [];
-
   for(let i = 0; i < question.length; i++){
     let isValidAnswer2 = question[i].querySelector(".wrongAnswers > input:nth-of-type(3)").value
     let isValidAnswer3 = question[i].querySelector(".wrongAnswers > input:nth-of-type(5)").value
@@ -387,14 +481,29 @@ function createQuestionObject(){
 
 function successQuizz(){
   storageLevelInfos()
-  // if (!titleValidation() || !titleURLValidation() || !colorValidation() || !questionTitleValidation()){
-  //   titleValidation()
-  //   questionURLValidation()
-  //   colorValidation();
-  //   questionTitleValidation()
-  //  } else{
-
-
+  if (levelTitleValidation() || levelUrlValidation() || levelPercentValidation() || levelDescriptionValidation()){
+    console.log("to aqui")
+    levelTitleValidation()
+    levelUrlValidation()
+    levelPercentValidation()
+    levelDescriptionValidation()
+   } else if (without0Percent()){
+     console.log("to aqui")
+     alert("Você precisa definir pelo menos um nível com porcentagem 0!!!")
+     return
+   } else {
+   container.innerHTML = null
+   container.innerHTML = `
+    <div class="quizzFinished">
+      <h2>Seu quizz está pronto!</h2>
+      <div>
+        <img src="${url}">
+        <div class="opacity"></div>
+      </div>
+      <button>Acessar Quizz</button>
+      <span>Voltar pra home</span>
+    </div>`
+  }
 }
 
 function storageLevelInfos(){
@@ -417,6 +526,7 @@ function storageLevelInfos(){
       minValue = null;
     }
     createLevelObject()
+    objectDone();
 }
 
 function createLevelObject(){
@@ -428,6 +538,15 @@ function createLevelObject(){
 			text: levelDataStorage[i][2],
 			minValue: levelDataStorage[i][3]
     })
+  }
+}
+
+function objectDone(){
+  objectQuizz = {
+    title: title,
+    image: url,
+    questions: questionObject,
+    levels: levelObject
   }
 }
 
