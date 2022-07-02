@@ -618,6 +618,27 @@ function showquestions() {
   document.querySelector('.hidden').classList.remove('hidden')
 }
 
+function answers() {
+  document.querySelector('.answers-quizz').innerHTML = `
+  <div class="answer">
+    <img src="${valueQuizz.questions[0].answers[0].image}" alt="" />
+    <p>${valueQuizz.questions[0].answers[0].text}</p>
+  </div>
+  <div class="answer">
+    <img src="${valueQuizz.questions[1].answers[1].image}" alt="" />
+    <p>${valueQuizz.questions[1].answers[1].text}</p>
+  </div>
+  <div class="answer">
+    <img src="${valueQuizz.questions[1].answers[1].image}" alt="" />
+    <p>${valueQuizz.questions[1].answers[1].text}</p>
+  </div>
+  <div class="answer">
+    <img src="${valueQuizz.questions[0].answers[0].image}" alt="" />
+    <p>${valueQuizz.questions[0].answers[0].text}</p>
+  </div>
+  `
+}
+
 function questionsQuizz() {
   document.querySelector('.play-quizz').innerHTML = `
     <div class="banner-play-quizz">
@@ -625,28 +646,13 @@ function questionsQuizz() {
       </div>
       <div class="answers-quizz">
       
-        <div class="answer">
-          <img src="${valueQuizz.questions[0].answers[0].image}" alt="" />
-          <p>${valueQuizz.questions[0].answers[0].text}</p>
-        </div>
-        <div class="answer">
-          <img src="" alt="" />
-          <p>Gatinho</p>
-        </div>
-        <div class="answer">
-          <img src="" alt="" />
-          <p>Gatinho</p>
-        </div>
-        <div class="answer">
-          <img src="" alt="" />
-          <p>Gatinho</p>
-        </div>
       </div>
 
       <div class="conclusion hidden">
       
     </div>
   `
+  answers()
 }
 
 function finishQuizz() {
