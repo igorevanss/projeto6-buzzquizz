@@ -624,9 +624,10 @@ function questionsQuizz() {
         <p>${valueQuizz.questions[0].title}</p>
       </div>
       <div class="answers-quizz">
+      
         <div class="answer">
-          <img src="" alt="" />
-          <p>Gatinho</p>
+          <img src="${valueQuizz.questions[0].answers[0].image}" alt="" />
+          <p>${valueQuizz.questions[0].answers[0].text}</p>
         </div>
         <div class="answer">
           <img src="" alt="" />
