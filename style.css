@@ -379,7 +379,13 @@ h2{
   color: #484848;
 }
 
-main > button {
+.conclusion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.conclusion > button {
   width: 260.38px;
   height: 52px;
   background: #EC362D;
@@ -387,14 +393,14 @@ main > button {
   border: none;
 }
 
-main > button > p {
+.conclusion > button > p {
   font-weight: 400;
   font-size: 20px;
   text-align: center;
   color: #FFF5F4;
 }
 
-main > p {
+.conclusion > p {
   font-weight: 400;
   font-size: 20px;
   text-align: center;
