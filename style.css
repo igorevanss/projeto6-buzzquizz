@@ -36,7 +36,7 @@ main{
   align-items: center;
 }
 
-.make-quizz {
+.make-quizz{
   width: 1070px;
   height: 180px;
   border: 1px dashed #D5D5D5;
@@ -46,6 +46,36 @@ main{
   justify-content: center;
   flex-direction: column;
   border-radius: 5px;
+}
+
+.myQuizzes {
+  width: 1070px;
+  height: auto;
+  margin: 77px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.myQuizzesHeader{
+  width: 1070px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.myQuizzesContainer{
+  width: 1070px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.myQuizzes ion-icon{
+  color:#EC362D;
+  width: 30px;
+  height: 30px;
 }
 
 .make-quizz > span{
@@ -85,7 +115,7 @@ h2{
   flex-wrap: wrap;
 }
 
-.quizzes-container > div{
+.quizzes-container > div, .myQuizzesContainer > div{
   width: 340px;
   height: 180px;
   margin: 15px 7px 0 7px;
@@ -94,7 +124,7 @@ h2{
   overflow: hidden;
 }
 
-.all-quizzes img, .quizzFinished img{
+.all-quizzes img, .myQuizzesContainer img{
   width: 340px;
   height: 180px;
   object-fit: cover;
@@ -110,7 +140,7 @@ h2{
   left: 0;
 }
 
-.all-quizzes h3{
+.all-quizzes h3, .myQuizzes h3{
   position: absolute;
   bottom: 20px;
   left: 20px;
@@ -447,25 +477,25 @@ h2{
 
 @media (max-width: 1100px){
 
-  .make-quizz, .all-quizzes {
+  .make-quizz, .all-quizzes, .myQuizzes{
     width: 90%;
   }
 
-  .quizzes-container {
+  .quizzes-container, .myQuizzesContainer{
     width: 100%;
     justify-content: center;
   }
 
-  .quizzes-container > div{
+  .quizzes-container > div, .myQuizzesContainer > div{
     width: 100%;
     margin: 7.5px;
   }
   
-  .all-quizzes img, .quizzFinished img{
+  .all-quizzes img, .quizzFinished img, .myQuizzes img{
     width: 100%;
   }
 
-  .opacity{
+  .opacity, .myQuizzesHeader{
     width: 100%;
   }
 

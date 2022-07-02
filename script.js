@@ -1,5 +1,5 @@
 const container = document.querySelector(".DOMcontainer");
-let createdQuizzID = [];
+let myQuizzesArray = [];
 welcome()
 const quizzesContainer = document.querySelector(".quizzes-container");
 let APIQuizzes;
@@ -15,36 +15,63 @@ let objectQuizz = [];
 let valueQuizz;
 
 
+
 function welcome(){
   const container = document.querySelector(".DOMcontainer");
   container.innerHTML = null
-  if(createdQuizzID.length === 0){
-    container.innerHTML += `
-    <main>
-      <div class="make-quizz">
-        <span>Você não criou nenhum quizz ainda :(</span>
-        <button onclick="initialInfoQuizz()">Criar Quizz</button>
-      </div>
-      <div class="all-quizzes">
-        <h2>Todos os Quizzes</h2>
-        <div class="quizzes-container"></div>
-      </div>
-    </main>`
-  } else {
-    container.innerHTML += `
-    <main>
-      <div class="make-quizz">
-        <span>Você não criou nenhum quizz ainda :(</span>
-        <button onclick="initialInfoQuizz()">Criar Quizz</button>
-      </div>
-      <div class="all-quizzes">
-        <h2>Todos os Quizzes</h2>
-        <div class="quizzes-container"></div>
-      </div>
-    </main>`
-  }
-  
+  container.innerHTML += `
+  <main>
+    <div class="make-quizz">
+      <span>Você não criou nenhum quizz ainda :(</span>
+      <button onclick="initialInfoQuizz()">Criar Quizz</button>
+    </div>
+    <div class="all-quizzes">
+      <h2>Todos os Quizzes</h2>
+      <div class="quizzes-container"></div>
+    </div>
+  </main>`
   getQuizzes()
+
+  if (localStorage.length !== 0){
+    container.innerHTML = null
+    container.innerHTML += `
+    <main>
+      <div class="myQuizzes">
+        <div class="myQuizzesHeader">
+          <h2>Seus Quizzes</h2>
+          <ion-icon name="add-circle-sharp" onclick="initialInfoQuizz()"></ion-icon>
+        </div>
+        <div class="myQuizzesContainer"></div>
+      </div>
+      <div class="all-quizzes">
+        <h2>Todos os Quizzes</h2>
+        <div class="quizzes-container"></div>
+      </div>
+    </main>`
+    getMyQuizzes()
+  }
+}
+
+function getMyQuizzes(){
+  for(let i = 0; i < localStorage.length; i++){
+    const getLocal = localStorage.getItem(localStorage.key(i));
+    const myQuizz = JSON.parse(getLocal)
+    myQuizzesArray.push(myQuizz)
+  }
+  renderMyQuizzes()
+}
+
+function renderMyQuizzes() {
+  let myQuizzesContainer = document.querySelector(".myQuizzesContainer") 
+  myQuizzesContainer.innerHTML = null
+  for (let i = 0; i < myQuizzesArray.length; i++) {
+    myQuizzesContainer.innerHTML += `
+    <div onclick="goToQuizz(this)" id="${myQuizzesArray[i].id}">
+      <img src=${myQuizzesArray[i].image}>
+      <h3>${myQuizzesArray[i].title}</h3>
+      <div class="opacity"></div>
+    </div>`
+  }
 }
 
 function getQuizzes() {
@@ -575,7 +602,6 @@ function objectDone(){
 
 function saveQuizz(valor){
   const newQuizz = valor.data;
-  createdQuizzID.push(newQuizz.id)
   const newQuizzSerializado = JSON.stringify(newQuizz);
   localStorage.setItem(`${newQuizz.id}`, newQuizzSerializado)
 }
@@ -666,7 +692,7 @@ function finishQuizz() {
       </div>
     </div>
     <button onclick=""><p>Reiniciar Quizz</p></button>
-    <p onclick="welcome()">Voltar pra home</p>
+    <p onclick="reload()">Voltar pra home</p>
   `
 }
 
