@@ -8,6 +8,8 @@ let numberOfQuestions;
 let numberOfLevels;
 let questionDataStorage = [];
 let questionObject = [];
+let levelDataStorage = [];
+let levelObject = [];
 
 function welcome(){
   const container = document.querySelector(".DOMcontainer");
@@ -104,24 +106,24 @@ function createQuestions(){
             <div class="correctAnswer">
               <h3>Resposta correta</h3>
               <input placeholder="Resposta correta" class="answer">
-              <div class="hidden">O valor informado não é uma URL válida. :(</div>
+              <div class="hidden">Você não pode deixar essa resposta vazia. :(</div>
               <input placeholder="URL da imagem" class="url">
               <div class="hidden">O valor informado não é uma URL válida. :(</div>
             </div>
             <div class="wrongAnswers">
               <h3>Respostas incorretas</h3>
               <input placeholder="Resposta incorreta 1" class="answer">
-              <div class="hidden">O valor informado não é uma URL válida. :(</div>
+              <div class="hidden">Você não pode deixar essa resposta vazia. :(</div>
               <input placeholder="URL da imagem 1" class="url">
               <div class="hidden">O valor informado não é uma URL válida. :(</div>
               <div></div>
               <input placeholder="Resposta incorreta 2" class="answer">
-              <div class="hidden">O valor informado não é uma URL válida. :(</div>
+              <div class="hidden">Você não pode deixar essa resposta vazia. :(</div>
               <input placeholder="URL da imagem 2" class="url">
               <div class="hidden">O valor informado não é uma URL válida. :(</div>
               <div></div>
               <input placeholder="Resposta incorreta 3" class="answer">
-              <div class="hidden">O valor informado não é uma URL válida. :(</div>
+              <div class="hidden">Você não pode deixar essa resposta vazia. :(</div>
               <input placeholder="URL da imagem 3" class="url">
               <div class="hidden">O valor informado não é uma URL válida. :(</div>
               <div></div>
@@ -130,7 +132,6 @@ function createQuestions(){
         </div>` 
     }
     questionsContainer.innerHTML += `<button onclick="createLevels()">Prosseguir para criar níveis</button>`
-  //}
 }
 
 function titleValidation(){
@@ -207,8 +208,8 @@ function colorValidation(){
   return true
 }
 
-function generalURLValidation(){
-  let allQuestions = document.querySelectorAll(".maxiQuestion")
+function titleURLValidation(){
+  let allMaxi = document.querySelectorAll(".maxiQuestion, .maxiLevel")
   let cont = 0;
   let pattern = new RegExp('^(https?:\\/\\/)?'+ 
     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ 
@@ -217,14 +218,14 @@ function generalURLValidation(){
     '(\\?[;&a-z\\d%_.~+=-]*)?'+ 
     '(\\#[-a-z\\d_]*)?$','i'); 
   let answersArray = questionObject.map((value) => value = value.answers)
-  for (let i=0; i < allQuestions.length; i++){
+  for (let i=0; i < allMaxi.length; i++){
     while (cont < answersArray[i].length){
-      if (pattern.test(allQuestions[i].querySelectorAll(".url")[cont].value)) {
-        allQuestions[i].querySelectorAll(".url")[cont].nextElementSibling.classList.add("hidden");
-        allQuestions[i].querySelectorAll(".url")[cont].nextElementSibling.classList.remove("validation");
+      if (pattern.test(allMaxi[i].querySelectorAll(".url")[cont].value)) {
+        allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.add("hidden");
+        allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.remove("validation");
       } else {
-        allQuestions[i].querySelectorAll(".url")[cont].nextElementSibling.classList.remove("hidden");
-        allQuestions[i].querySelectorAll(".url")[cont].nextElementSibling.classList.add("validation");
+        allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.remove("hidden");
+        allMaxi[i].querySelectorAll(".url")[cont].nextElementSibling.classList.add("validation");
       }
       cont ++
     }
@@ -233,18 +234,18 @@ function generalURLValidation(){
   return true
 }
 
-function generalTitleValidation(){
-  let allQuestions = document.querySelectorAll(".maxiQuestion")
+function questionTitleValidation(){
+  let allMaxi = document.querySelectorAll(".maxiQuestion")
   let cont = 0;
   let answersArray = questionObject.map((value) => value = value.answers)
-  for (let i=0; i < allQuestions.length; i++){
+  for (let i=0; i < allMaxi.length; i++){
     while (cont < answersArray[i].length){
-      if (allQuestions[i].querySelectorAll(".answer")[cont].value !== "") {
-        allQuestions[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.add("hidden");
-        allQuestions[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.remove("validation");
+      if (allMaxi[i].querySelectorAll(".answer")[cont].value !== "") {
+        allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.add("hidden");
+        allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.remove("validation");
       } else {
-        allQuestions[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.remove("hidden");
-        allQuestions[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.add("validation");
+        allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.remove("hidden");
+        allMaxi[i].querySelectorAll(".answer")[cont].nextElementSibling.classList.add("validation");
       }
       cont ++
     }
@@ -280,7 +281,45 @@ function hideOption(element){
 }
 
 function createLevels(){
-  const question = document.querySelectorAll(".maxiQuestion");
+  storageQuestionInfos()
+  // if (!titleValidation() || !titleURLValidation() || !colorValidation() || !questionTitleValidation()){
+  //   titleValidation()
+  //   questionURLValidation()
+  //   colorValidation();
+  //   questionTitleValidation()
+  //  } else{
+
+    container.innerHTML = null;
+    container.innerHTML = `
+      <div class="quizzLevels">
+        <h2>Agora, decida os níveis!</h2>
+      </div>`
+    const levelsContainer = document.querySelector(".quizzLevels")
+    for(let i = 1; i <= numberOfLevels; i++){
+      levelsContainer.innerHTML += `
+      <div class="levelSizes">
+        <div class="miniLevel" onclick="hideOption(this)">
+          <h3>Nível ${i}</h3>
+          <ion-icon name="create-outline"></ion-icon>
+        </div>
+        <div class="maxiLevel hidden">
+          <h3>Nível ${i}</h3>
+          <input placeholder="Título do nível" class="title">
+          <div class="hidden">O título deve ter, pelo menos, 10 caracteres. :(</div>
+          <input placeholder="% de acerto mínima"  class="minPercent">
+          <div class="hidden">Insira um valor de 0 a 100. :(</div>
+          <input placeholder="URL da imagem do nível" class="url">
+          <div class="hidden">O valor informado não é uma URL válida. :(</div>
+          <input placeholder="Descrição do nível"  class="description">
+          <div class="hidden">A descrição deve ter, pelo menos, 30 caracteres. :(</div>
+        </div>
+      </div>`
+    }
+    levelsContainer.innerHTML += `<button onclick="successQuizz()">Finalizar Quizz</button>`
+}
+
+function storageQuestionInfos(){
+const question = document.querySelectorAll(".maxiQuestion");
   questionDataStorage = [];
   let questionInfo = [];
   let correct = [];
@@ -310,40 +349,8 @@ function createLevels(){
     correct = [];
     wrong = [];
   }
-
   createQuestionObject()
-    // if (!titleValidation() || !generalURLValidation() || !colorValidation() || !generalTitleValidation()){
-    //   titleValidation()
-    //   generalURLValidation()
-    //   colorValidation();
-    //   generalTitleValidation()
-    //  } else{
-
-      container.innerHTML = null;
-      container.innerHTML = `
-        <div class="quizzLevels">
-          <h2>Agora, decida os níveis!</h2>
-        </div>`
-      const levelsContainer = document.querySelector(".quizzLevels")
-      for(let i = 1; i <= numberOfLevels; i++){
-        levelsContainer.innerHTML += `
-        <div class="levelSizes">
-          <div class="miniLevel" onclick="hideOption(this)">
-            <h3>Nível ${i}</h3>
-            <ion-icon name="create-outline"></ion-icon>
-          </div>
-          <div class="maxiLevel hidden">
-            <h3>Nível ${i}</h3>
-            <input placeholder="Título do nível">
-            <input placeholder="% de acerto mínima">
-            <input placeholder="URL da imagem do nível">
-            <input placeholder="Descrição do nível">
-          </div>
-        </div>`
-      }
-      levelsContainer.innerHTML += `<button onclick="reload()">Finalizar Quizz</button>`
-  }
-
+}
 
 function createQuestionObject(){
   questionObject = [];
@@ -377,6 +384,53 @@ function createQuestionObject(){
       urlPosition = 1;
   }
 }
+
+function successQuizz(){
+  storageLevelInfos()
+  // if (!titleValidation() || !titleURLValidation() || !colorValidation() || !questionTitleValidation()){
+  //   titleValidation()
+  //   questionURLValidation()
+  //   colorValidation();
+  //   questionTitleValidation()
+  //  } else{
+
+
+}
+
+function storageLevelInfos(){
+  const level = document.querySelectorAll(".maxiLevel");
+    levelDataStorage = [];
+    let title;
+    let image;
+    let text;
+    let minValue;
+  
+    for(let i = 0; i < level.length; i++){
+      title = level[i].querySelector("input:nth-of-type(1)").value;
+      image = level[i].querySelector("input:nth-of-type(2)").value;
+      text = level[i].querySelector("input:nth-of-type(3)").value;
+      minValue = level[i].querySelector("input:nth-of-type(4)").value
+      levelDataStorage.push([title, image, text, minValue])
+      title = null;
+      image = null;
+      text = null;
+      minValue = null;
+    }
+    createLevelObject()
+}
+
+function createLevelObject(){
+  levelObject = [];
+  for (let i = 0; i < levelDataStorage.length; i++){
+    levelObject.push({
+      title: levelDataStorage[i][0],
+			image: levelDataStorage[i][1],
+			text: levelDataStorage[i][2],
+			minValue: levelDataStorage[i][3]
+    })
+  }
+}
+
 
 
 function goToQuizz(){
