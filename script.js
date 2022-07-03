@@ -709,6 +709,8 @@ function injectQuizz(header) {
 function questionsQuizz(){
   let playQuizz = document.querySelector('.play-quizz')
   for (let i = 0; i < valueQuizz.questions.length; i++){
+    let answersArray = valueQuizz.questions[i].answers
+    answersArray.sort(shuffler)
     playQuizz.innerHTML += `
       <div style="background: ${valueQuizz.questions[i].color}" class="banner-play-quizz">
         <p>${valueQuizz.questions[i].title}</p>
@@ -717,39 +719,17 @@ function questionsQuizz(){
       </div>`
     for (let ansNum = 0; ansNum < valueQuizz.questions[i].answers.length; ansNum++){
       document.querySelectorAll(".answers-quizz")[i].innerHTML +=`
-      <div class="answer" onclick="ifTrue(this)">
-        <img src="${valueQuizz.questions[0].answers[0].image}" alt="" />
-        <p>${valueQuizz.questions[0].answers[0].text}</p>
+      <div class="answer ${answersArray[ansNum].isCorrectAnswer}" onclick="ifTrue(this)">
+        <img src="${answersArray[ansNum].image}" alt="" />
+        <p>${answersArray[ansNum].text}</p>
       </div>`
     } 
   }
-  //answers()
+  playQuizz.innerHTML += `<div class="conclusion hidden"></div>`
 }
 
-/*
-      <div class="conclusion hidden">
-      
-    </div>*/
-
-function answers() {
-  document.querySelector('.answers-quizz').innerHTML = `
-  <div class="answer" onclick="ifTrue(this)">
-    <img src="${valueQuizz.questions[0].answers[0].image}" alt="" />
-    <p>${valueQuizz.questions[0].answers[0].text}</p>
-  </div>
-  <div class="answer" onclick="ifTrue(this)">
-    <img src="${valueQuizz.questions[1].answers[1].image}" alt="" />
-    <p>${valueQuizz.questions[1].answers[1].text}</p>
-  </div>
-  <div class="answer" onclick="ifTrue(this)">
-    <img src="${valueQuizz.questions[1].answers[1].image}" alt="" />
-    <p>${valueQuizz.questions[1].answers[1].text}</p>
-  </div>
-  <div class="answer" onclick="ifTrue(this)">
-    <img src="${valueQuizz.questions[0].answers[0].image}" alt="" />
-    <p>${valueQuizz.questions[0].answers[0].text}</p>
-  </div>
-  `
+function shuffler() {
+  return Math.random() - 0.5;
 }
 
 function ifTrue(clicked) {
@@ -768,7 +748,6 @@ function ifTrue(clicked) {
 
 
 function finishQuizz() {
-  showquestions()
   document.querySelector('.conclusion').innerHTML = `
     <div class="finishing-quizz">
       <div class="banner-finishing-quizz">
