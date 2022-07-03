@@ -71,7 +71,6 @@ function renderMyQuizzes() {
       <div class="opacity"></div>
     </div>`
   }
-  console.log(myQuizzesArray[i].questions)
 }
 
 function getQuizzes() {
@@ -125,12 +124,7 @@ function createQuestions() {
   url = allInputs.querySelector('input:nth-of-type(2)').value
   numberOfQuestions = allInputs.querySelector('input:nth-of-type(3)').value
   numberOfLevels = allInputs.querySelector('input:nth-of-type(4)').value
-  if (
-    titleValidation() ||
-    urlQuizzValidation() ||
-    questionNumberValidation() ||
-    levelNumberValidation()
-  ) {
+  if (titleValidation() || urlQuizzValidation() || questionNumberValidation() || levelNumberValidation()) {
     titleValidation()
     urlQuizzValidation()
     questionNumberValidation()
@@ -198,11 +192,16 @@ function titleValidation() {
       allTitleInput[i].nextElementSibling.classList.remove('hidden')
       allTitleInput[i].nextElementSibling.classList.add('validation')
       allTitleInput[i].classList.add('invalidInput')
-      bool = true
+      if (bool === true || bool === undefined){
+        bool = true;
+      } else {bool = true}
     } else {
       allTitleInput[i].nextElementSibling.classList.add('hidden')
       allTitleInput[i].nextElementSibling.classList.remove('validation')
       allTitleInput[i].classList.remove('invalidInput')
+      if (bool === true){
+        bool = true;
+      } else {bool = false}
     }
   }
   return bool
@@ -211,15 +210,12 @@ function titleValidation() {
 function urlQuizzValidation() {
   let urlMessage = document.querySelector('.infoContainer > div:nth-of-type(2)')
   let input = document.querySelector('.infoContainer > input:nth-of-type(2)')
-  let pattern = new RegExp(
-    '^(https?:\\/\\/)?' +
+  let pattern = new RegExp('^(https?:\\/\\/)?' +
       '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +
       '((\\d{1,3}\\.){3}\\d{1,3}))' +
       '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
       '(\\?[;&a-z\\d%_.~+=-]*)?' +
-      '(\\#[-a-z\\d_]*)?$',
-    'i'
-  )
+      '(\\#[-a-z\\d_]*)?$','i')
   if (pattern.test(url)) {
     urlMessage.classList.add('hidden')
     urlMessage.classList.remove('validation')
@@ -234,9 +230,7 @@ function urlQuizzValidation() {
 }
 
 function questionNumberValidation() {
-  let questionsMessage = document.querySelector(
-    '.infoContainer > div:nth-of-type(3)'
-  )
+  let questionsMessage = document.querySelector('.infoContainer > div:nth-of-type(3)')
   let input = document.querySelector('.infoContainer > input:nth-of-type(3)')
   if (numberOfQuestions < 3) {
     questionsMessage.classList.remove('hidden')
@@ -278,12 +272,16 @@ function colorValidation() {
       allColorInput[i].nextElementSibling.classList.add('hidden')
       allColorInput[i].nextElementSibling.classList.remove('validation')
       allColorInput[i].classList.remove('invalidInput')
-      bool = false
+      if (bool === true){
+        bool = true;
+      } else {bool = false}
     } else {
       allColorInput[i].nextElementSibling.classList.remove('hidden')
       allColorInput[i].nextElementSibling.classList.add('validation')
       allColorInput[i].classList.add('invalidInput')
-      bool = true
+      if (bool === true || bool === undefined){
+        bool = true;
+      } else {bool = true}
     }
   }
   return bool
@@ -292,7 +290,6 @@ function colorValidation() {
 function questionURLValidation(){
   let bool;
   let allMaxi = document.querySelectorAll(".maxiQuestion")
-  let validation = document.querySelectorAll(".invalidInput")
   let cont = 0;
   let pattern = new RegExp('^(https?:\\/\\/)?'+ 
     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ 
@@ -329,7 +326,6 @@ function questionURLValidation(){
 function questionTitleValidation(){
   let bool;
   let allMaxi = document.querySelectorAll(".maxiQuestion")
-  let validation = document.querySelectorAll(".invalidInput")
   let cont = 0;
   for (let i=0; i < allMaxi.length; i++){
     while (cont < questionObject[i].answers.length){
@@ -363,12 +359,16 @@ function levelTitleValidation() {
       allTitleInput[i].nextElementSibling.classList.remove('hidden')
       allTitleInput[i].nextElementSibling.classList.add('validation')
       allTitleInput[i].classList.add('invalidInput')
-      bool = true
+      if (bool === true || bool === undefined){
+        bool = true;
+      } else {bool = true}
     } else {
       allTitleInput[i].nextElementSibling.classList.add('hidden')
       allTitleInput[i].nextElementSibling.classList.remove('validation')
       allTitleInput[i].classList.remove('invalidInput')
-      bool = false
+      if (bool === true){
+        bool = true;
+      } else {bool = false}
     }
   }
   return bool
@@ -377,26 +377,27 @@ function levelTitleValidation() {
 function levelUrlValidation() {
   let bool
   let totalMaxi = document.querySelectorAll('.url')
-  let pattern = new RegExp(
-    '^(https?:\\/\\/)?' +
+  let pattern = new RegExp('^(https?:\\/\\/)?' +
       '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +
       '((\\d{1,3}\\.){3}\\d{1,3}))' +
       '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
       '(\\?[;&a-z\\d%_.~+=-]*)?' +
-      '(\\#[-a-z\\d_]*)?$',
-    'i'
-  )
+      '(\\#[-a-z\\d_]*)?$','i')
   for (let i = 0; i < totalMaxi.length; i++) {
     if (pattern.test(totalMaxi[i].value)) {
       totalMaxi[i].nextElementSibling.classList.add('hidden')
       totalMaxi[i].nextElementSibling.classList.remove('validation')
       totalMaxi[i].classList.remove('invalidInput')
-      bool = false
+      if (bool === true){
+        bool = true;
+      } else {bool = false}
     } else {
       totalMaxi[i].nextElementSibling.classList.remove('hidden')
       totalMaxi[i].nextElementSibling.classList.add('validation')
       totalMaxi[i].classList.add('invalidInput')
-      bool = true
+      if (bool === true || bool === undefined){
+        bool = true;
+      } else {bool = true}
     }
   }
   return bool
@@ -410,12 +411,16 @@ function levelDescriptionValidation() {
       allDescriptionInput[i].nextElementSibling.classList.remove('hidden')
       allDescriptionInput[i].nextElementSibling.classList.add('validation')
       allDescriptionInput[i].classList.add('invalidInput')
-      bool = true
+      if (bool === true || bool === undefined){
+        bool = true;
+      } else {bool = true}
     } else {
       allDescriptionInput[i].nextElementSibling.classList.add('hidden')
       allDescriptionInput[i].nextElementSibling.classList.remove('validation')
       allDescriptionInput[i].classList.remove('invalidInput')
-      bool = false
+      if (bool === true){
+        bool = true;
+      } else {bool = false}
     }
   }
   return bool
@@ -425,20 +430,20 @@ function levelPercentValidation() {
   let bool
   let allPercentInput = document.querySelectorAll('.minPercent')
   for (let i = 0; i < allPercentInput.length; i++) {
-    if (
-      allPercentInput[i].value < 0 ||
-      allPercentInput[i].value > 100 ||
-      allPercentInput[i].value === ''
-    ) {
+    if (allPercentInput[i].value < 0 || allPercentInput[i].value > 100 || allPercentInput[i].value === '') {
       allPercentInput[i].nextElementSibling.classList.remove('hidden')
       allPercentInput[i].nextElementSibling.classList.add('validation')
       allPercentInput[i].classList.add('invalidInput')
-      bool = true
+      if (bool === true || bool === undefined){
+        bool = true;
+      } else {bool = true}
     } else {
       allPercentInput[i].nextElementSibling.classList.add('hidden')
       allPercentInput[i].nextElementSibling.classList.remove('validation')
       allPercentInput[i].classList.remove('invalidInput')
-      bool = false
+      if (bool === true){
+        bool = true;
+      } else {bool = false}
     }
   }
   return bool
@@ -456,13 +461,9 @@ function without0Percent() {
 
 function hideOption(element) {
   const optionSizes = element.parentNode
-  const removeMaximizedQuestion = document.querySelector(
-    '.maxiQuestion:not(.hidden)'
-  )
+  const removeMaximizedQuestion = document.querySelector('.maxiQuestion:not(.hidden)')
   const removeMaximizedLevel = document.querySelector('.maxiLevel:not(.hidden)')
-  const defaultMinimizedQuestion = document.querySelector(
-    '.miniQuestion.hidden'
-  )
+  const defaultMinimizedQuestion = document.querySelector('.miniQuestion.hidden')
   const defaultMinimizedLevel = document.querySelector('.miniLevel.hidden')
   const maximizedQuestion = optionSizes.querySelector('.maxiQuestion')
   const maximizedLevel = optionSizes.querySelector('.maxiLevel')
@@ -485,12 +486,7 @@ function hideOption(element) {
 
 function createLevels() {
   storageQuestionInfos()
-  if (
-    titleValidation() ||
-    questionURLValidation() ||
-    colorValidation() ||
-    questionTitleValidation()
-  ) {
+  if (titleValidation() || questionURLValidation() || colorValidation() || questionTitleValidation()){
     titleValidation()
     questionURLValidation()
     colorValidation()
@@ -534,53 +530,23 @@ function storageQuestionInfos() {
   let correct = []
   let wrong = []
   for (let i = 0; i < question.length; i++) {
-    let isValidAnswer2 = question[i].querySelector(
-      '.wrongAnswers > input:nth-of-type(3)'
-    ).value
-    let isValidAnswer3 = question[i].querySelector(
-      '.wrongAnswers > input:nth-of-type(5)'
-    ).value
-    let isValidURL2 = question[i].querySelector(
-      '.wrongAnswers > input:nth-of-type(4)'
-    ).value
-    let isValidURL3 = question[i].querySelector(
-      '.wrongAnswers > input:nth-of-type(6)'
-    ).value
-    questionInfo.push(
-      question[i].querySelector('.questionDescription > input:nth-of-type(1)')
-        .value
-    )
-    questionInfo.push(
-      question[i].querySelector('.questionDescription > input:nth-of-type(2)')
-        .value
-    )
-    correct.push(
-      question[i].querySelector('.correctAnswer > input:nth-of-type(1)').value
-    )
-    correct.push(
-      question[i].querySelector('.correctAnswer > input:nth-of-type(2)').value
-    )
-    wrong.push(
-      question[i].querySelector('.wrongAnswers > input:nth-of-type(1)').value
-    )
-    wrong.push(
-      question[i].querySelector('.wrongAnswers > input:nth-of-type(2)').value
-    )
+    let isValidAnswer2 = question[i].querySelector('.wrongAnswers > input:nth-of-type(3)').value
+    let isValidAnswer3 = question[i].querySelector('.wrongAnswers > input:nth-of-type(5)').value
+    let isValidURL2 = question[i].querySelector('.wrongAnswers > input:nth-of-type(4)').value
+    let isValidURL3 = question[i].querySelector('.wrongAnswers > input:nth-of-type(6)').value
+    questionInfo.push(question[i].querySelector('.questionDescription > input:nth-of-type(1)').value)
+    questionInfo.push(question[i].querySelector('.questionDescription > input:nth-of-type(2)').value)
+    correct.push(question[i].querySelector('.correctAnswer > input:nth-of-type(1)').value)
+    correct.push(question[i].querySelector('.correctAnswer > input:nth-of-type(2)').value)
+    wrong.push(question[i].querySelector('.wrongAnswers > input:nth-of-type(1)').value)
+    wrong.push(question[i].querySelector('.wrongAnswers > input:nth-of-type(2)').value)
     if (isValidAnswer2 != '' || isValidURL2 !== '') {
-      wrong.push(
-        question[i].querySelector('.wrongAnswers > input:nth-of-type(3)').value
-      )
-      wrong.push(
-        question[i].querySelector('.wrongAnswers > input:nth-of-type(4)').value
-      )
+      wrong.push(question[i].querySelector('.wrongAnswers > input:nth-of-type(3)').value)
+      wrong.push(question[i].querySelector('.wrongAnswers > input:nth-of-type(4)').value)
     }
     if (isValidAnswer3 != '' || isValidURL3 !== '') {
-      wrong.push(
-        question[i].querySelector('.wrongAnswers > input:nth-of-type(5)').value
-      )
-      wrong.push(
-        question[i].querySelector('.wrongAnswers > input:nth-of-type(6)').value
-      )
+      wrong.push(question[i].querySelector('.wrongAnswers > input:nth-of-type(5)').value)
+      wrong.push(question[i].querySelector('.wrongAnswers > input:nth-of-type(6)').value)
     }
     questionDataStorage.push([questionInfo, correct, wrong])
     questionInfo = []
@@ -628,12 +594,7 @@ function createQuestionObject() {
 
 function successQuizz() {
   storageLevelInfos()
-  if (
-    levelTitleValidation() ||
-    levelUrlValidation() ||
-    levelPercentValidation() ||
-    levelDescriptionValidation()
-  ) {
+  if (levelTitleValidation() || levelUrlValidation() || levelPercentValidation() || levelDescriptionValidation()) {
     levelTitleValidation()
     levelUrlValidation()
     levelPercentValidation()
@@ -652,7 +613,7 @@ function successQuizz() {
         <p>${title}</p>
       </div>
       <button>Acessar Quizz</button>
-      <span>Voltar pra home</span>
+      <span onclick="reload()">Voltar pra home</span>
     </div>
     `
   }
