@@ -485,8 +485,16 @@ h2{
   margin-bottom: 10px
 }
 
-.selected {
+.blocked {
   filter: opacity(50%);;
+}
+
+.false.blocked > p, .false.selected > p{
+  color: red;
+}
+
+.true.blocked > p, .true.selected > p{
+  color: green;
 }
 
 .hidden {

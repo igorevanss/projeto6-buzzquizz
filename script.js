@@ -691,6 +691,7 @@ function goToQuizz(element) {
 }
 
 function injectQuizz(header) {
+  window.scrollTo(0, 0)
   valueQuizz = header.data
   container.innerHTML = `
   <main>
@@ -719,7 +720,7 @@ function questionsQuizz(){
       </div>`
     for (let ansNum = 0; ansNum < valueQuizz.questions[i].answers.length; ansNum++){
       document.querySelectorAll(".answers-quizz")[i].innerHTML +=`
-      <div class="answer ${answersArray[ansNum].isCorrectAnswer}" onclick="ifTrue(this)">
+      <div class="answer ${answersArray[ansNum].isCorrectAnswer}" onclick="selectAnswer(this)">
         <img src="${answersArray[ansNum].image}" alt="" />
         <p>${answersArray[ansNum].text}</p>
       </div>`
@@ -730,6 +731,22 @@ function questionsQuizz(){
 
 function shuffler() {
   return Math.random() - 0.5;
+}
+
+function selectAnswer(element){
+  let question = element.parentNode
+  let allAnswers = question.querySelectorAll(".answer")
+  question.classList.add("questionComplete")
+  if (!element.classList.contains("selected") && !element.classList.contains("blocked")){
+    element.classList.add("selected")
+  }
+  for (let i = 0; i < allAnswers.length; i++){
+    if (allAnswers[i].classList.contains("false") && !allAnswers[i].classList.contains("selected") && !allAnswers[i].classList.contains("blocked")){
+      allAnswers[i].classList.add("blocked")
+    } else if (allAnswers[i].classList.contains("true") && !allAnswers[i].classList.contains("selected") && !allAnswers[i].classList.contains("blocked")) {
+      allAnswers[i].classList.add("blocked")
+    }
+  }
 }
 
 function ifTrue(clicked) {
