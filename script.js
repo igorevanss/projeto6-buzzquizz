@@ -692,9 +692,7 @@ function goToQuizz(element) {
 
 function injectQuizz(header) {
   valueQuizz = header.data
-
-  container.innerHTML = null
-  container.innerHTML += `
+  container.innerHTML = `
   <main>
     <div class="banner-quizz">
       <div class="opacity60">
@@ -702,19 +700,36 @@ function injectQuizz(header) {
       </div>
       <img src="${valueQuizz.image}" alt="" />
     </div>
-
-    <div class="play-quizz hidden">
-
-    </div>
+    <div class="play-quizz"></div>
   </main>
   `
-  showquestions()
   questionsQuizz()
 }
 
-function showquestions() {
-  document.querySelector('.hidden').classList.remove('hidden')
+function questionsQuizz(){
+  let playQuizz = document.querySelector('.play-quizz')
+  for (let i = 0; i < valueQuizz.questions.length; i++){
+    playQuizz.innerHTML += `
+      <div style="background: ${valueQuizz.questions[i].color}" class="banner-play-quizz">
+        <p>${valueQuizz.questions[i].title}</p>
+      </div>
+      <div class="answers-quizz">
+      </div>`
+    for (let ansNum = 0; ansNum < valueQuizz.questions[i].answers.length; ansNum++){
+      document.querySelectorAll(".answers-quizz")[i].innerHTML +=`
+      <div class="answer" onclick="ifTrue(this)">
+        <img src="${valueQuizz.questions[0].answers[0].image}" alt="" />
+        <p>${valueQuizz.questions[0].answers[0].text}</p>
+      </div>`
+    } 
+  }
+  //answers()
 }
+
+/*
+      <div class="conclusion hidden">
+      
+    </div>*/
 
 function answers() {
   document.querySelector('.answers-quizz').innerHTML = `
@@ -750,21 +765,7 @@ function ifTrue(clicked) {
 
 }
 
-function questionsQuizz() {
-  document.querySelector('.play-quizz').innerHTML = `
-    <div class="banner-play-quizz">
-        <p>${valueQuizz.questions[0].title}</p>
-      </div>
-      <div class="answers-quizz">
-      
-      </div>
 
-      <div class="conclusion hidden">
-      
-    </div>
-  `
-  answers()
-}
 
 function finishQuizz() {
   showquestions()
