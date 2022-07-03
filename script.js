@@ -14,6 +14,7 @@ let levelObject = []
 let objectQuizz = []
 let valueQuizz
 let correctAnswer
+let newQuizz;
 
 function welcome() {
   const container = document.querySelector('.DOMcontainer')
@@ -612,7 +613,7 @@ function successQuizz() {
         <div class="opacity"></div>
         <p>${title}</p>
       </div>
-      <button>Acessar Quizz</button>
+      <button onclick="goToQuizz(newQuizz)">Acessar Quizz</button>
       <span onclick="reload()">Voltar pra home</span>
     </div>
     `
@@ -673,13 +674,12 @@ function objectDone() {
 }
 
 function saveQuizz(valor) {
-  const newQuizz = valor.data
+  newQuizz = valor.data
   const newQuizzSerializado = JSON.stringify(newQuizz)
   localStorage.setItem(`${newQuizz.id}`, newQuizzSerializado)
 }
 
 function goToQuizz(element) {
-  console.log(element.id)
   const promise = axios.get(
     `https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${element.id}`
   )
