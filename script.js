@@ -726,7 +726,7 @@ function questionsQuizz(){
       </div>`
     } 
   }
-  playQuizz.innerHTML += `<div class="conclusion hidden"></div>`
+  playQuizz.innerHTML += `<div class="conclusion"></div>`
 }
 
 function shuffler() {
@@ -734,6 +734,8 @@ function shuffler() {
 }
 
 function selectAnswer(element){
+  let allCompletedQuestions = document.querySelectorAll(".questionComplete");
+  let allQuestions = document.querySelectorAll(".answers-quizz");
   let question = element.parentNode
   let allAnswers = question.querySelectorAll(".answer")
   question.classList.add("questionComplete")
@@ -741,7 +743,6 @@ function selectAnswer(element){
     element.classList.add("selected")
     if (element.classList.contains("true")){
       isCorrect += 1;
-      console.log(isCorrect)
     }
   }
   for (let i = 0; i < allAnswers.length; i++){
@@ -751,28 +752,29 @@ function selectAnswer(element){
       allAnswers[i].classList.add("blocked")
     }
   }
-  setTimeout(scrollQuestion, 2000)
+  if (allQuestions.length !== allCompletedQuestions.length){
+    setTimeout(scrollQuestion, 2000)
+  }
 }
 
 function scrollQuestion(){
+  let allCompletedQuestions = document.querySelectorAll(".questionComplete");
+  let allQuestions = document.querySelectorAll(".answers-quizz");
   let emptyQuestion = document.querySelector(".answers-quizz:not(.questionComplete)")
-  window.scrollTo(50, emptyQuestion.scrollHeight)
-}
-
-
-function ifTrue(clicked) {
-  const ifNull = document.querySelector('.selected')
-  if (ifNull !== null) {
-    ifNull.classList.remove('selected')
+  if (allCompletedQuestions.length < allQuestions.length){
+    emptyQuestion.scrollIntoView();
+  } else {
+    showFinalResult()
   }
-  clicked.classList.add('selected')
-
-  console.log(valueQuizz.questions[1].answers[1].isCorrectAnswer)
-
-  correctAnswer = valueQuizz.questions[1].answers[1].isCorrectAnswer;
-
 }
 
+function showFinalResult(){
+  let allQuestions = document.querySelectorAll(".answers-quizz");
+  let floatPercent = (isCorrect/allQuestions.length)*100;
+  let finalPercent = `${Math.round(floatPercent)}%`
+  console.log(finalPercent)
+
+}
 
 
 function finishQuizz() {
