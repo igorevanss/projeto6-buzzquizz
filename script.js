@@ -595,7 +595,6 @@ function createQuestionObject() {
 }
 
 function successQuizz() {
-  storageLevelInfos()
   if (levelTitleValidation() || levelUrlValidation() || levelPercentValidation() || levelDescriptionValidation()) {
     levelTitleValidation()
     levelUrlValidation()
@@ -605,6 +604,7 @@ function successQuizz() {
     alert('Você precisa definir pelo menos um nível com porcentagem 0!!!')
     return
   } else {
+    storageLevelInfos()
     container.innerHTML = null
     container.innerHTML = `
     <div class="quizzFinished">
@@ -668,8 +668,8 @@ function objectDone() {
     objectQuizz
   )
   promise.catch(err => {
-    erro = err.response.data
-    console.log('erro')
+    let erro = err.response.data
+    console.log(erro)
   })
   promise.then(saveQuizz)
 }
