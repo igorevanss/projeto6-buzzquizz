@@ -439,6 +439,9 @@ h2{
   display: flex;
   align-items: center;
   justify-content: center;
+  word-wrap: break-word;
+  word-break: break-all;
+  padding: 0 30px;
 }
 
 .banner-finishing-quizz > p {
@@ -451,6 +454,8 @@ h2{
   display: flex;
   gap: 20px;
   margin-top: 18px;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .finishing-quizz-content img {
@@ -476,9 +481,6 @@ h2{
   background: #EC362D;
   border-radius: 16px;
   border: none;
-}
-
-.conclusion > button > p {
   font-weight: 400;
   font-size: 20px;
   text-align: center;
@@ -531,24 +533,15 @@ h2{
     width: 100%;
     margin: 7.5px;
   }
-  
-  .all-quizzes img, .quizzFinished img, .myQuizzes img{
-    width: 100%;
-  }
-
-  .opacity, .myQuizzesHeader{
-    width: 100%;
-  }
 
   .basicInfos > h2, .questionsQuizz > h2, .quizzLevels > h2{
     margin-top: 40px;
   }
 
-  .infoContainer, .miniQuestion, .maxiQuestion, .maxiLevel, .miniLevel, .questionsQuizz{
-    width: 100%;
-  }
-
-  .questionSizes, .levelSizes{
+  .infoContainer, .miniQuestion, .maxiQuestion, .maxiLevel, 
+  .miniLevel, .questionsQuizz, .questionSizes, .levelSizes,
+  .all-quizzes img, .quizzFinished img, .myQuizzes img,
+  .opacity, .myQuizzesHeader, .quizzFinished .opacity{
     width: 100%;
   }
 
@@ -562,17 +555,38 @@ h2{
     margin: 30px 25px;
   }
 
-  .quizzFinished div{
+  .quizzFinished div, .banner-finishing-quizz{
     width: 90%;
-  }
-
-  .quizzFinished .opacity{
-    width: 100%;
   }
 
   .quizzFinished p{
     word-wrap: break-word;
     word-break: break-all;
+  }
+
+  .finishing-quizz{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    padding: 18px 0;
+  }
+
+  .finishing-quizz-content{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+
+  .finishing-quizz-content > img{
+    margin-bottom: 15px;
+    width: 100%;
   }
 }
 
