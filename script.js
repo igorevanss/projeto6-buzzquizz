@@ -217,7 +217,7 @@ function urlQuizzValidation() {
       '((\\d{1,3}\\.){3}\\d{1,3}))' +
       '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
       '(\\?[;&a-z\\d%_.~+=-]*)?' +
-      '(\\#[-a-z\\d_]*)?$','i')
+      '(\\#[-a-z\\d_]*)?$','i');
   if (pattern.test(url)) {
     urlMessage.classList.add('hidden')
     urlMessage.classList.remove('validation')
@@ -604,6 +604,7 @@ function successQuizz() {
     alert('Você precisa definir pelo menos um nível com porcentagem 0!!!')
     return
   } else {
+    appearLoading();
     storageLevelInfos()
     container.innerHTML = null
     container.innerHTML = `
@@ -615,7 +616,7 @@ function successQuizz() {
         <p>${title}</p>
       </div>
       <button onclick="goToQuizz(newQuizz)">Acessar Quizz</button>
-      <span onclick="reload()">Voltar pra home</span>
+      <span onclick="reloadPage()">Voltar pra home</span>
     </div>
     `
   }
@@ -681,17 +682,20 @@ function saveQuizz(valor) {
 }
 
 function goToQuizz(element) {
+  isCorrect = 0;
   const promise = axios.get(
     `https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${element.id}`
   )
   promise.catch(error => {
     alert('Ocorreu um erro inesperado. A página será recarregada.')
-    reload()
+    window.location.reload();
   })
+  appearLoading();
   promise.then(injectQuizz)
 }
 
 function injectQuizz(header) {
+  console.log(header)
   window.scrollTo(0, 0)
   valueQuizz = header.data
   container.innerHTML = `
@@ -774,7 +778,6 @@ function showFinalResult(){
   let floatPercent = (isCorrect/allQuestions.length)*100;
   let finalPercent = `${Math.round(floatPercent)}%`
   let organizedLevelArray = valueQuizz.levels.sort((a, b) => a.minValue-b.minValue)
-  console.log(organizedLevelArray)
   for (let i = 0; i < organizedLevelArray.length; i++){
     if ((floatPercent >= organizedLevelArray[i].minValue && floatPercent < organizedLevelArray[i+1].minValue) || floatPercent === i){
       document.querySelector('.conclusion').innerHTML = `
@@ -788,9 +791,8 @@ function showFinalResult(){
           </div>
         </div>
         <button onclick="goToQuizz(valueQuizz)">Reiniciar Quizz</button>
-        <p onclick="reload()">Voltar pra home</p>`
+        <p onclick="reloadPage()">Voltar pra home</p>`
         resultContainer.scrollIntoView();
-      isCorrect = 0;
       return
     } else if (floatPercent >= organizedLevelArray[organizedLevelArray.length-1].minValue){
       document.querySelector('.conclusion').innerHTML = `
@@ -804,14 +806,20 @@ function showFinalResult(){
         </div>
       </div>
       <button onclick="goToQuizz(valueQuizz)">Reiniciar Quizz</button>
-      <p onclick="reload()">Voltar pra home</p>`
+      <p onclick="reloadPage()">Voltar pra home</p>`
       resultContainer.scrollIntoView();
-      isCorrect = 0;
       return
     }
   }
 }
 
-function reload() {
-  window.location.reload()
+function appearLoading(){
+  let loadingContainer = document.querySelector(".loading");
+  loadingContainer.classList.remove("hidden")
+  setTimeout(() => loadingContainer.classList.add("hidden"), 2000)
+}
+
+function reloadPage() {
+  appearLoading();
+  setTimeout(() => window.location.reload(), 1500) 
 }
