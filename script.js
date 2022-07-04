@@ -15,6 +15,7 @@ let objectQuizz = []
 let valueQuizz
 let correctAnswer
 let newQuizz;
+let isCorrect = 0;
 
 function welcome() {
   const container = document.querySelector('.DOMcontainer')
@@ -696,10 +697,9 @@ function injectQuizz(header) {
   container.innerHTML = `
   <main>
     <div class="banner-quizz">
-      <div class="opacity60">
-        <p>${valueQuizz.title}</p>
-      </div>
+      <p>${valueQuizz.title}</p>
       <img src="${valueQuizz.image}" alt="" />
+      <div class="opacity60"></div>
     </div>
     <div class="play-quizz"></div>
   </main>
@@ -713,10 +713,10 @@ function questionsQuizz(){
     let answersArray = valueQuizz.questions[i].answers
     answersArray.sort(shuffler)
     playQuizz.innerHTML += `
-      <div style="background: ${valueQuizz.questions[i].color}" class="banner-play-quizz">
-        <p>${valueQuizz.questions[i].title}</p>
-      </div>
       <div class="answers-quizz">
+        <div style="background: ${valueQuizz.questions[i].color}" class="banner-play-quizz">
+        <p>${valueQuizz.questions[i].title}</p>
+        </div>
       </div>`
     for (let ansNum = 0; ansNum < valueQuizz.questions[i].answers.length; ansNum++){
       document.querySelectorAll(".answers-quizz")[i].innerHTML +=`
@@ -739,6 +739,10 @@ function selectAnswer(element){
   question.classList.add("questionComplete")
   if (!element.classList.contains("selected") && !element.classList.contains("blocked")){
     element.classList.add("selected")
+    if (element.classList.contains("true")){
+      isCorrect += 1;
+      console.log(isCorrect)
+    }
   }
   for (let i = 0; i < allAnswers.length; i++){
     if (allAnswers[i].classList.contains("false") && !allAnswers[i].classList.contains("selected") && !allAnswers[i].classList.contains("blocked")){
@@ -747,7 +751,14 @@ function selectAnswer(element){
       allAnswers[i].classList.add("blocked")
     }
   }
+  setTimeout(scrollQuestion, 2000)
 }
+
+function scrollQuestion(){
+  let emptyQuestion = document.querySelector(".answers-quizz:not(.questionComplete)")
+  window.scrollTo(50, emptyQuestion.scrollHeight)
+}
+
 
 function ifTrue(clicked) {
   const ifNull = document.querySelector('.selected')

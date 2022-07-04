@@ -335,11 +335,18 @@ h2{
   width: 100%;
   height: 226px;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .banner-quizz img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 
 .opacity60 {
@@ -348,9 +355,6 @@ h2{
   background-color: black;
   filter: opacity(60%);
   position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   top: 0px;
   left: 0px;
 }
@@ -360,15 +364,23 @@ h2{
   font-size: 38px;
   text-align: center;
   color: #FFFFFF;
+  position: relative;
+  z-index: 1;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
-.play-quizz {
+.answers-quizz {
   width: 758px;
-  height: 676px;
+  height: auto;
   background: #FFFFFF;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
   margin: 42px 0px;
   padding: 28px 36px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4%;
 }
 
 .banner-play-quizz {
@@ -382,26 +394,26 @@ h2{
 
 .banner-play-quizz > p {
   font-weight: 700;
-  font-size: 22px;
+  font-size: 23px;
   color: #FFFFFF;
-}
-
-.answers-quizz {
-  margin: 20px 0px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 26px;
+  text-align: center;
 }
 
 .answer > img {
-  width: 330px;
+  width: 100%;
   height: 174px;
-  background: url(image.png);
-  border-radius: 0px;
+  object-fit: cover;
+}
+
+.answer{
+  width: 48%;
+  margin-top: 26px;
 }
 
 .answer > p {
   font-weight: 700;
+  word-break: break-all;
+  word-wrap: break-word;
   font-size: 20px;
   color: #000000;
   margin-top: 14px;
@@ -440,7 +452,6 @@ h2{
 .finishing-quizz-content img {
   width: 364px;
   height: 273px;
-  background: url(image.png);
 }
 
 .finishing-quizz-content > p {
@@ -507,7 +518,7 @@ h2{
     width: 90%;
   }
 
-  .quizzes-container, .myQuizzesContainer{
+  .quizzes-container, .myQuizzesContainer, .answers-quizz{
     width: 100%;
     justify-content: center;
   }
@@ -537,7 +548,7 @@ h2{
     width: 100%;
   }
 
-  .miniQuestion, .maxiQuestion, .miniLevel, .maxiLevel{
+  .miniQuestion, .maxiQuestion, .miniLevel, .maxiLevel, .answers-quizz{
     margin-left: 0;
     margin-right: 0;
   }
