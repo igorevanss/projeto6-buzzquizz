@@ -166,17 +166,17 @@ function createQuestions() {
               <div class="hidden">Você não pode deixar essa resposta vazia. :(</div>
               <input placeholder="URL da imagem 1" class="url">
               <div class="hidden">O valor informado não é uma URL válida. :(</div>
-              <div></div>
+              <div class="space"></div>
               <input placeholder="Resposta incorreta 2" class="answer">
               <div class="hidden">Você não pode deixar essa resposta vazia. :(</div>
               <input placeholder="URL da imagem 2" class="url">
               <div class="hidden">O valor informado não é uma URL válida. :(</div>
-              <div></div>
+              <div class="space"></div>
               <input placeholder="Resposta incorreta 3" class="answer">
               <div class="hidden">Você não pode deixar essa resposta vazia. :(</div>
               <input placeholder="URL da imagem 3" class="url">
               <div class="hidden">O valor informado não é uma URL válida. :(</div>
-              <div></div>
+              <div class="space"></div>
             </div>
           </div>
         </div>
@@ -609,7 +609,7 @@ function successQuizz() {
     container.innerHTML = `
     <div class="quizzFinished">
       <h2>Seu quizz está pronto!</h2>
-      <div>
+      <div onclick="goToQuizz(newQuizz)">
         <img src="${url}">
         <div class="opacity"></div>
         <p>${title}</p>
@@ -732,30 +732,6 @@ function questionsQuizz(){
 function shuffler() {
   return Math.random() - 0.5;
 }
-
-/*function selectAnswer(element){
-  let allCompletedQuestions = document.querySelectorAll(".questionComplete");
-  let allQuestions = document.querySelectorAll(".answers-quizz");
-  let question = element.parentNode
-  let allAnswers = question.querySelectorAll(".answer")
-  question.classList.add("questionComplete")
-  if (!element.classList.contains("selected") && !element.classList.contains("blocked")){
-    element.classList.add("selected")
-    if (element.classList.contains("true")){
-      isCorrect += 1;
-    }
-  }
-  for (let i = 0; i < allAnswers.length; i++){
-    if (allAnswers[i].classList.contains("false") && !allAnswers[i].classList.contains("selected") && !allAnswers[i].classList.contains("blocked")){
-      allAnswers[i].classList.add("blocked")
-    } else if (allAnswers[i].classList.contains("true") && !allAnswers[i].classList.contains("selected") && !allAnswers[i].classList.contains("blocked")) {
-      allAnswers[i].classList.add("blocked")
-    }
-  }
-  if (allQuestions.length !== allCompletedQuestions.length){
-    setTimeout(scrollQuestion, 2000)
-  }
-}*/
 
 function selectAnswer(element){
   let allCompletedQuestions = document.querySelectorAll(".questionComplete");

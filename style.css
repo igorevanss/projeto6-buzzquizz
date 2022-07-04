@@ -32,7 +32,7 @@ button:hover, .myQuizzes ion-icon:hover{
   filter: brightness(1.6);
 }
 
-.myQuizzesContainer div:hover, .quizzes-container div:hover{
+.myQuizzesContainer div:hover, .quizzes-container div:hover, .quizzFinished > span:hover, .quizzFinished > div:hover, .conclusion > p:hover{
   cursor: pointer;
   filter: brightness(0.8);
 }
@@ -84,8 +84,8 @@ main{
 
 .myQuizzes ion-icon{
   color:#EC362D;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
 }
 
 .make-quizz > span{
@@ -192,13 +192,17 @@ h2{
 .infoContainer input, .questionDescription input, .correctAnswer input, .wrongAnswers input, .maxiLevel input{
   width: 100%;
   height: 46px;
-  color: #000000;
+  color: #777676;
   border: 1px solid #D1D1D1;
   border-radius: 5px;
   padding-left: 23px;
   margin: 5px 0;
   font-size: 19px;
   outline-color: #EC362D;
+}
+
+.space{
+  height: 25px;
 }
 
 .invalidInput{
@@ -229,7 +233,7 @@ h2{
   align-items: center;
   background-color: #FFFFFF;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-  padding: 27px 0;
+  padding-top: 27px;
   margin: 12.5px;
 }
 
@@ -567,7 +571,8 @@ h2{
   }
 
   .quizzFinished p{
-    font-size: 19px;
+    word-wrap: break-word;
+    word-break: break-all;
   }
 }
 
