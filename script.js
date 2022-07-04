@@ -733,7 +733,7 @@ function shuffler() {
   return Math.random() - 0.5;
 }
 
-function selectAnswer(element){
+/*function selectAnswer(element){
   let allCompletedQuestions = document.querySelectorAll(".questionComplete");
   let allQuestions = document.querySelectorAll(".answers-quizz");
   let question = element.parentNode
@@ -754,6 +754,30 @@ function selectAnswer(element){
   }
   if (allQuestions.length !== allCompletedQuestions.length){
     setTimeout(scrollQuestion, 2000)
+  }
+}*/
+
+function selectAnswer(element){
+  let allCompletedQuestions = document.querySelectorAll(".questionComplete");
+  let allQuestions = document.querySelectorAll(".answers-quizz");
+  let question = element.parentNode
+  let allAnswers = question.querySelectorAll(".answer")
+  if (!element.classList.contains("selected") && !element.classList.contains("blocked")){
+    question.classList.add("questionComplete")
+    element.classList.add("selected")
+    if (element.classList.contains("true")){
+      isCorrect += 1;
+    }
+    for (let i = 0; i < allAnswers.length; i++){
+      if (allAnswers[i].classList.contains("false") && !allAnswers[i].classList.contains("selected") && !allAnswers[i].classList.contains("blocked")){
+        allAnswers[i].classList.add("blocked")
+      } else if (allAnswers[i].classList.contains("true") && !allAnswers[i].classList.contains("selected") && !allAnswers[i].classList.contains("blocked")) {
+        allAnswers[i].classList.add("blocked")
+      }
+    }
+    if (allQuestions.length !== allCompletedQuestions.length){
+      setTimeout(scrollQuestion, 2000)
+    }
   }
 }
 
