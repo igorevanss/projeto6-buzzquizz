@@ -772,29 +772,41 @@ function showFinalResult(){
   let allQuestions = document.querySelectorAll(".answers-quizz");
   let floatPercent = (isCorrect/allQuestions.length)*100;
   let finalPercent = `${Math.round(floatPercent)}%`
-  console.log(finalPercent)
-
-}
-
-
-function finishQuizz() {
-  document.querySelector('.conclusion').innerHTML = `
-    <div class="finishing-quizz">
-      <div class="banner-finishing-quizz">
-        <p>88% de acerto: Você é praticamente um aluno de Hogwarts!</p>
+  let organizedLevelArray = valueQuizz.levels.sort((a, b) => a.minValue-b.minValue)
+  console.log(organizedLevelArray)
+  for (let i = 0; i < organizedLevelArray.length; i++){
+    if (floatPercent >= organizedLevelArray[i].minValue && floatPercent < organizedLevelArray[i+1].minValue){
+      document.querySelector('.conclusion').innerHTML = `
+        <div class="finishing-quizz">
+          <div class="banner-finishing-quizz">
+            <p>${finalPercent} de acerto: ${organizedLevelArray[i].title}</p>
+          </div>
+          <div class="finishing-quizz-content">
+            <img src="${organizedLevelArray[i].image}" alt="" />
+            <p>${organizedLevelArray[i].text}</p>
+          </div>
+        </div>
+        <button onclick="goToQuizz(valueQuizz)">Reiniciar Quizz</button>
+        <p onclick="reload()">Voltar pra home</p>`
+      isCorrect = 0;
+      return
+    } else if (floatPercent >= organizedLevelArray[organizedLevelArray.length-1].minValue){
+      document.querySelector('.conclusion').innerHTML = `
+      <div class="finishing-quizz">
+        <div class="banner-finishing-quizz">
+          <p>${finalPercent} de acerto: ${organizedLevelArray[organizedLevelArray.length-1].title}</p>
+        </div>
+        <div class="finishing-quizz-content">
+          <img src="${organizedLevelArray[organizedLevelArray.length-1].image}" alt="" />
+          <p>${organizedLevelArray[organizedLevelArray.length-1].text}</p>
+        </div>
       </div>
-      <div class="finishing-quizz-content">
-        <img src="" alt="" />
-        <p>
-          Parabéns Potterhead! Bem-vindx a Hogwarts, aproveite o loop
-          infinito de comida e clique no botão abaixo para usar o
-          vira-tempo e reiniciar este teste.
-        </p>
-      </div>
-    </div>
-    <button onclick=""><p>Reiniciar Quizz</p></button>
-    <p onclick="reload()">Voltar pra home</p>
-  `
+      <button onclick="goToQuizz(valueQuizz)">Reiniciar Quizz</button>
+      <p onclick="reload()">Voltar pra home</p>`
+      isCorrect = 0;
+      return
+    }
+  }
 }
 
 function reload() {
