@@ -769,13 +769,14 @@ function scrollQuestion(){
 }
 
 function showFinalResult(){
+  let resultContainer = document.querySelector(".conclusion")
   let allQuestions = document.querySelectorAll(".answers-quizz");
   let floatPercent = (isCorrect/allQuestions.length)*100;
   let finalPercent = `${Math.round(floatPercent)}%`
   let organizedLevelArray = valueQuizz.levels.sort((a, b) => a.minValue-b.minValue)
   console.log(organizedLevelArray)
   for (let i = 0; i < organizedLevelArray.length; i++){
-    if (floatPercent >= organizedLevelArray[i].minValue && floatPercent < organizedLevelArray[i+1].minValue){
+    if ((floatPercent >= organizedLevelArray[i].minValue && floatPercent < organizedLevelArray[i+1].minValue) || floatPercent === i){
       document.querySelector('.conclusion').innerHTML = `
         <div class="finishing-quizz">
           <div class="banner-finishing-quizz">
@@ -788,6 +789,7 @@ function showFinalResult(){
         </div>
         <button onclick="goToQuizz(valueQuizz)">Reiniciar Quizz</button>
         <p onclick="reload()">Voltar pra home</p>`
+        resultContainer.scrollIntoView();
       isCorrect = 0;
       return
     } else if (floatPercent >= organizedLevelArray[organizedLevelArray.length-1].minValue){
@@ -803,6 +805,7 @@ function showFinalResult(){
       </div>
       <button onclick="goToQuizz(valueQuizz)">Reiniciar Quizz</button>
       <p onclick="reload()">Voltar pra home</p>`
+      resultContainer.scrollIntoView();
       isCorrect = 0;
       return
     }
