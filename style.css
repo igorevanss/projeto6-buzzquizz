@@ -32,7 +32,7 @@ button:hover, .myQuizzes ion-icon:hover{
   filter: brightness(1.6);
 }
 
-.myQuizzesContainer div:hover, .quizzes-container div:hover, .quizzFinished > span:hover, .quizzFinished > div:hover, .conclusion > p:hover{
+.myQuizzesContainer div:hover, .quizzes-container div:hover, .quizzFinished > span:hover, .quizzFinished > div:hover, .conclusion > p:hover, .answer:hover{
   cursor: pointer;
   filter: brightness(0.8);
 }
