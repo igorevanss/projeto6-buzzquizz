@@ -32,9 +32,20 @@ button:hover, .myQuizzes ion-icon:hover{
   filter: brightness(1.6);
 }
 
-.myQuizzesContainer div:hover, .quizzes-container div:hover, .quizzFinished > span:hover, .quizzFinished > div:hover, .conclusion > p:hover, .answer:hover{
+.myQuizzesContainer div:hover, .quizzes-container div:hover, .quizzFinished > span:hover, .quizzFinished > div:hover, .conclusion > p:hover{
   cursor: pointer;
   filter: brightness(0.8);
+}
+
+.answer:hover{
+  cursor: pointer;
+  transform: scale(1.01);
+}
+
+.make-quizz button:hover{
+  background-color: #EC362D;
+  color: #FAFAFA;
+  border: 1px dashed #fafafa;;
 }
 
 main{
@@ -106,6 +117,7 @@ main{
   border: 1px dashed #EC362D;
   border-radius: 50px;
   background-color: #FAFAFA;
+  transition: all .5s;
 }
 
 h2{
