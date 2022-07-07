@@ -37,7 +37,7 @@ button:hover, .myQuizzes ion-icon:hover{
   filter: brightness(0.8);
 }
 
-.answer:hover{
+.answers-quizz .answer:hover{
   cursor: pointer;
   transform: scale(1.01);
 }
@@ -201,7 +201,7 @@ h2{
   padding: 22px;
 }
 
-.infoContainer input, .questionDescription input, .correctAnswer input, .wrongAnswers input, .maxiLevel input{
+.infoContainer input, .questionDescription input, .correctAnswer input, .wrongAnswers input, .maxiLevel input {
   width: 100%;
   height: 46px;
   color: #777676;
@@ -621,11 +621,5 @@ h2{
     word-wrap: break-word;
     word-break: break-all;
   }
-
-  .finishing-quizz-content > img{
-    margin-bottom: 15px;
-    width: 100%;
-  }
-
 
 }

@@ -766,7 +766,7 @@ function scrollQuestion(){
   let allQuestions = document.querySelectorAll(".answers-quizz");
   let emptyQuestion = document.querySelector(".answers-quizz:not(.questionComplete)")
   if (allCompletedQuestions.length < allQuestions.length){
-    emptyQuestion.scrollIntoView();
+    emptyQuestion.scrollIntoView({behavior:"smooth", block: "center"});
   } else {
     showFinalResult()
   }
@@ -792,7 +792,7 @@ function showFinalResult(){
         </div>
         <button onclick="goToQuizz(valueQuizz)">Reiniciar Quizz</button>
         <p onclick="reloadPage()">Voltar pra home</p>`
-        resultContainer.scrollIntoView();
+        resultContainer.scrollIntoView({block: "center"});
       return
     } else if (floatPercent >= organizedLevelArray[organizedLevelArray.length-1].minValue){
       document.querySelector('.conclusion').innerHTML = `
@@ -807,7 +807,7 @@ function showFinalResult(){
       </div>
       <button onclick="goToQuizz(valueQuizz)">Reiniciar Quizz</button>
       <p onclick="reloadPage()">Voltar pra home</p>`
-      resultContainer.scrollIntoView();
+      resultContainer.scrollIntoView({block: "center"});
       return
     }
   }
